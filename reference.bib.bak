@@ -1,0 +1,41 @@
+@misc{0-23,
+author = {{Dua D.} and {Graff C.}},
+year = {2017},
+title = {UCI Machine Learning Repository},
+url = {http://archive.ics.uci.edu/ml},
+institution = {University of California, Irvine, School of Information and Computer Sciences}
+}
+@article{1-1,
+title={Survey of Clustering Algorithms},
+author={{Xu R.} and {Wunsch D.}},
+journal={IEEE Transactions on Neural Networks},
+volume={16},
+number={3},
+pages={645--678},
+year={2005}
+}
+@article{1-2,
+title={A Comprehensive Survey of Clustering Algorithms},
+author={{Xu D.K.} and {Tian Y.J.}},
+journal={Annals of Science},
+volume={2},
+pages={165--193},
+year={2015}
+}
+@article{1-3,
+title={A Survey on Ensemble Learning},
+author={{Dong X.B.} and {Yu Z.W.} and {Cao W.M.} and others},
+journal={Frontiers of Computer Science},
+volume={14},
+pages={241--258},
+year={2020}
+}
+@inproceedings{2-3,
+title={The Infinite Gaussian Mixture Model},
+author={{Rasmussen E.C.} and {Solla A.S.} and {Leen K.T.} and others},
+booktitle={Advances in Neural Information Processing Systems},
+publisher={MIT Press},
+address={Cambridge},
+pages={554--560},
+year={2000}
+}

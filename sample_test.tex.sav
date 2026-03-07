@@ -1,0 +1,488 @@
+\documentclass[unicode,pdfcover]{scutthesis}
+\usepackage{longtable,booktabs}
+\usepackage{supertabular}
+\usepackage[unicode=false,bookmarks=true,bookmarksnumbered=true,bookmarksopen=false,
+ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=true]
+ {hyperref}
+
+%%%%以下包可根据需要插入，基本涵盖所需内容。
+\usepackage{multirow}%画表格推荐先在Excel简单制表，然后复制到该网页{Create LaTeX tables online https://tablesgenerator.com/}自动生成tex代码再粘贴过来（按需进一步简单修改）。
+%\usepackage{arydshln}
+%\usepackage{amsmath}%公式推荐使用WinEdt 10.3自带的IDE插入，公式外的特殊字符请使用$$ 括起来。
+%\usepackage[算法]{algorithm}%算法二字可中文显示“算法”
+%\usepackage{algorithmic}
+\usepackage{lscape}%横放图表时用到
+%\usepackage{longtable}%跨页表格用到
+
+
+\hypersetup{pdftitle={聚类集成研究与应用},
+ pdfauthor={施一帆},
+ pdfsubject={华南理工大学博士学位论文},%博士请使用该设置，此为偶数页页眉字样
+ %pdfsubject={华南理工大学硕士学位论文},%硕士请使用该设置，此为奇数页页眉字样
+ pdfkeywords={聚类分析, 集成学习},
+ linkcolor=black, anchorcolor=black, citecolor=black, filecolor=black, menucolor=black, urlcolor=blue}
+
+\begin{document}
+\maketitle
+
+\frontmatter
+
+\begin{abstractCN}
+在信息时代，伴随着海量数据获取与存储技术的快速发展，如何从数据中获得有价值的信息和规律成为了许多行业的热点问题。作为人工智能领域的重要分支，机器学习技术融合多学科知识，利用各类方法对数据进行建模分析，实现知识发现。机器学习技术已经逐渐成为许多行业发展的新驱动力，并被广泛应用于科学研究与工业生产。然而在许多实际应用中，数据往往存在着类别分布不均衡的问题。由于标准的机器学习算法都是基于训练数据集样本分布均衡的假设而设计，这导致传统的机器学习算法在处理这些类别分布不均衡问题时往往性能不佳，而类别不平衡问题也成为许多实际分类应用中的重要挑战。在机器学习中，集成学习方法由于其良好的泛化性能，成为了一大热门研究方向，借助集成学习方法，许多单一的分类模型在性能上能够得到进一步的提升。
+
+本文聚焦于结合集成学习方法的不平衡分类算法研究。在深入探索类别不平衡学习的各项策略基础上，围绕着数据层面更合理有效的重采样算法设计、算法层面新的模型改进、算法层面代价敏感矩阵设计、以及融合不平衡问题的集成策略、融合优化方法的集成框架等多个方面展开研究。主要工作包括：
+
+（1）针对欠采样方法容易丢失有效信息以及代价敏感方法对异常值和噪声点过于敏感这两项问题，本文提出了基于多目标的混合优化集成算法。首先设计了与分布相关的重采样策略，用来减少欠采样过程中损失大量信息的风险。同时，结合样本分布信息设计了基于密度的欠采样多目标优化集成方法(DBUME)。 最后，提出一种混合集成框架，结合ADMM算法集成并优化了代价敏感方法和DBUME的预测结果，一定程度上弥补重采样方法与代价敏感方法各自的局限性。本文在大量的不平衡数据集上进行了实验，并且对本算法与现有的不平衡学习主流算法进行了比较，全面系统地证明了本算法的有效性。
+
+
+（2）针对不平衡数据存在的类内不均衡问题以及重采样方法适应性不足对不平衡分类算法模型的影响，本文提出了结合度量学习和自适应两阶段欠采样方法的混合集成算法。通过度量学习为原始不平衡数据集找到更合适的嵌入空间，而自适应两阶段欠采样方法同时考虑信息量大的样本和代表性样本来生成平衡的数据集。此外，为了提升泛化性能，本文提出了一种渐进式集成框架(PHCE)，利用具有局部和全局评估标准的渐进式机制来选择集成成员，从而进一步提高模型的性能。在多个真实数据集上的实验结果表明，PHCE优于大多数不平衡分类集成算法，在处理不平衡数据分类问题上具有更好的性能。
+
+（3）针对宽度学习系统处理不平衡分类问题的局限性，本文设计了一种带权重的宽度学习系统(WBLS)，同时为了减少不平衡数据中异常点和噪声点的影响，结合样本数据的先验分布信息设计了一种基于混合密度的权重生成策略，并提出了自适应的带权重宽度学习系统(AWBLS)。最后，提出一种增量式的集成模型框架，通过增量式集成机制，进一步提升 AWBLS的稳定性和鲁棒性。基于大量真实世界数据集的实验证明了所提出算法的优越性能。
+
+\end{abstractCN}
+\keywordsCN{机器学习;分类算法;不平衡学习}
+
+\begin{abstractEN}
+In the information age, with the rapid development of massive data acquisition and storage technology, how to obtain valuable information from data has become a hot issue in many industries. As an important branch in the field of artificial intelligence, machine learning technology integrates multi-disciplinary knowledge and uses various methods to model and analyze data to realize knowledge discovery. Machine learning technology has gradually become a new driving force for the development of many industries, and is widely used in scientific research and industrial production. However, in many practical applications, the data exhibits an unequal distribution of samples across its classes，which is regarded as class imbalance problem.  The standard machine learning algorithms are designed based on the assumption that the distribution of training data is balanced, which has led to the poor performance of traditional machine learning algorithms when dealing with imbalance problem. The class imbalance problem has also become increasingly challenging in many practical classification applications. In machine learning, ensemble learning methods have become a hot research direction due to their good generalization performance. With the help of ensemble learning methods, many single classification models can be further improved in performance.
+
+This paper focuses on the research of imbalanced data classification methods combined with ensemble learning. On the basis of in-depth exploration of various strategies for imbalance learning, this paper focuses on more reasonable and effective resampling methods designed at the data level, new model improvements at the algorithm level, cost-sensitive matrix design at the algorithm level, ensemble strategies that integrate imbalance problems, and the ensemble framework of fusion optimization methods.
+The main work of this paper is described as follows:
+
+(1)	In order to solve the issue that the under-sampling method is easy to lose effective information and the cost-sensitive method is too sensitive to outliers and noise points, this paper proposes a multi-objective hybrid optimization ensemble algorithm. First, a distribution based resampling strategy is designed to reduce the risk of losing a large amount of information during the under-sampling process. At the same time, a density-based under-sampling multi-objective optimization ensemble method (DBUME) is designed based on the sample distribution information. Finally, a hybrid ensemble framework is proposed, which integrates and optimizes the prediction results of the cost-sensitive method and DBUME by ADMM algorithm. The purpose is to make up for the respective limitations of the resampling method and the cost-sensitive method to a certain extent. This paper conducts experiments on a large number of imbalanced data sets, and compares the proposed algorithm with the existing mainstream imbalance learning methods. The experimental results comprehensively and systematically prove the effectiveness of our method.
+
+
+(2)	In order to solve the issue that the class overlapping and insufficient  adaptability of resampling process negatively influence the performance of imbalance learning algorithms, this paper proposes a hybrid ensemble framework that combines metric learning and adaptive two-stage under-sampling methods. Metric learning is used to find a more suitable embedding space for the original imbalanced data set, and the adaptive two-stage under-sampling method considers both the informative and representative samples to generate a balanced data set. In addition, in order to improve the generalization ability, this paper proposes a progressive ensemble framework (PHCE), which uses a progressive mechanism with local and global evaluation criteria to select ensemble members, thereby further improve the performance of the model. Extensive comparative experiments conducted on multiple real-world data sets show that PHCE is superior to most imbalance ensemble classification approaches, and has better performance in dealing with imbalanced data classification problems.
+
+(3)	In order to solve the limitation of the broad learning system to deal with the imbalanced data classification problem, this paper designs a weighted broad learning system (WBLS). At the same time, in order to reduce the influence of abnormal points and noise points in the imbalanced data, we designed a weight generation strategy based on hybrid density by combining with the prior distribution information of the data, and proposed an adaptive weighted broad learning system (AWBLS). Finally, an incremental ensemble framework is proposed to further improve the stability and robustness of AWBLS through an incremental ensemble mechanism. Experiments on a large number of real-world data sets prove the superior performance of the proposed algorithm.
+
+\end{abstractEN}
+\keywordsEN{Machine learning; classification algorithm; imbalance learning; ensemble learning; re-sampling; cost-sensitive learning; broad learning system}
+
+
+\tableofcontents{}%自动生成章节内容目录，要第二次编译才能生成
+
+\listoftables%自动生成表格目录，要第二次编译才能生成。如需使用，请去掉前面注释%。若标题含有文献引用，请先注释进行BibTex编译生成bbl文件后，再使用该命令。
+
+\listoffigures%自动生成图目录，要第二次编译才能生成。如需使用，请去掉前面注释%。若标题含有文献引用，请先注释进行BibTex编译生成bbl文件后，再使用该命令。
+
+\mainmatter
+
+\chapter{绪论}
+
+\section{引言}
+随着云计算、物联网、人工智能等新一代信息技术的飞速发展与广泛应用，在数字经济领域不同行业、不同场景都会产生大量无标注复杂数据，这些数据中包含的潜在价值能够反过来为社会发展带来进一步推动作用。如何快速、有效地从数据中进行归纳总结，将杂乱的无监督数据转化为知识信息，已经成为数字经济时代的研究热点。聚类集成作为机器学习与数据挖掘中重要方法之一，通过结合统计学、概率学、优化计算等技术，能够在无监督环境下对复杂数据的潜在结构进行分析，实现从数据到知识的转化过程。因此，本文将针对聚类集成算法展开研究，完善其理论体系，进一步提升聚类分析性能。
+
+\section{研究背景与意义}
+随着数字经济的飞速发展，在生物医疗、多媒体、智能制造等领域都会产生大量原始数据，这些数据通常是复杂多样且缺乏标签信息的，但与此同时，数据中也包含了极具价值的潜在知识信息，在医疗诊断、商业决策、制造流程优化等方面的发展能发挥关键性作用。2020年，中国通信院发布的《中国数字经济发展白皮书》表明，我国数字经济规模不断扩张、贡献不断增强，数据价值化加速推进，数据已成为数字经济发展的关键生产要素。2021年，国家工业信息安全发展研究中心发布《2020—2021年度数字经济形势分析》显示，面对突如其来的新冠肺炎疫情，数字经济展现出强大的发展韧性，实现逆势增长，为世界经济复苏、增长注入重要动力。由此可见，数字经济时代下的大数据包含的潜在信息价值，能够为社会发展带来推动作用。然而，传统的人力分析手段不仅效率低下，还要求数据分析员具有丰富的行业经验积累，难以觉察数据中的非直接关联知识。因此，机器学习与数据挖掘技术逐渐成为数据经济时代的研究热点，它通过构建学习模型，探索数据中的潜在规律，从而实现数据到知识转化过程的自动化、智能化。
+
+在无监督环境下，聚类分析方法是机器学习与数据挖掘技术中的重要研究内容。基于“物以类聚，人以群分”的思想，聚类方法通过利用样本间相似度度量、设计划分策略，将距离上或结构上相似样本的归纳到相同类簇，而不相似的样本划分到不同的类簇\cite{1-1}\cite{1-2}。通过聚类过程，能够对杂乱的数据进行归纳总结，得到包含内在规律的类簇知识信息。从经典的K-Means\cite{2-1}、BIRCH\cite{2-2}、GMM\cite{2-3}算法，到近年来发表在Science上的的AP\cite{2-5}和DenPeak算法\cite{2-4}等，传统的聚类算法已经得到了广泛的研究。然而，Kleinberg 针对传统聚类算法开展的理论研究表明\cite{2-6}，受到初始化、参数选择、类簇结构、距离度量指标等因素的影响，不同聚类算法在不同场景下的聚类效果各不相同，不存在一种单一聚类算法能够满足所有数据集。因此，在实际应用中，单一聚类算法面临着调参困难、性能不稳定、任务适用性差等瓶颈问题。
+
+为了解决弱学习器性能不稳定的问题，集成学习逐渐成为研究热点。集成学习可以视作群智理论\cite{0-1}在机器学习领域中的应用，它通过对多个弱学习器的组合优化，取长补短，形成一个统一的强学习模型，实现算法整体准确率和鲁棒性的提升。传统集成学习首先应用于有监督分类任务中，诞生出了包括Bagging\cite{3-1}、Boosting\cite{3-2}、随机子空间\cite{3-3}、GBDT\cite{3-4} 和随机森林\cite{3-5}等多种经典算法，并由此衍生出多种性能优异的集成学习模型，例如，在各种数据挖掘竞赛中表现惊艳的XGBoost算法\cite{3-6}、面向不平衡数据的集成学习算法\cite{3-7}\cite{3-8}、 深度集成学习算法\cite{3-9}\cite{3-10}等。
+
+受到集成学习在分类任务上成功应用的启发，Strehl等人\cite{4-1}提出了集成学习在聚类任务中的应用，即聚类集成研究。聚类集成算法基于“求同存异”的思想，综合考虑多个基础聚类结果，归纳出置信度高的类簇结构，中和错误的样本标签，从而达到鲁棒性、统一性、准确性和稳定性的整体提升\cite{1-4}。在理论研究方面，围绕着聚类集成框架的各个步骤，国内外学者们相继开展聚类集成研究，逐渐形成了较为完整的研究体系，包括集成成员生成、集成成员选择、集成成员融合以及其他扩展研究，相关研究进展在多篇综述文章中得到了总结\cite{1-4}\cite{1-5}\cite{1-6}\cite{1-7}。在实际应用方面，伴随着近年来聚类集成算法的不断发展和数字经济时代对数据分析手段的迫切需求，聚类集成算法在文本分析\cite{4-2}\cite{4-3}\cite{4-4}\cite{4-5}、 生物信息分析\cite{4-6}\cite{4-7}\cite{4-8}\cite{4-9}\cite{4-10}、多媒体分析\cite{4-11}\cite{4-12}\cite{4-13}等领域都得到了应用与验证，例如：Marcacini等人\cite{4-5}设计了一种基于交互式特征选择的聚类集成框架，通过主动学习的方式改善文档特征矩阵，实现对文本中管理知识的有效提取；Yu等人\cite{4-7} 设计了一种基于双重选择过程的聚类集成框架，通过在基因特征维度和聚类解集维度同时设计自适应组合优化策略，实现对肿瘤基因数据集的有效聚类分析；Yang等人\cite{4-11}通过设计了一种基于双权重度量的聚类集成框架，对集成成员和类簇权重进行优化，最终用于对多媒体录像中的行人轨迹分析。综上所述，大量研究表明聚类集成算法作为聚类分析和集成学习相结合的前沿技术，在无监督或半监督环境下能够对复杂数据的潜在类簇结构进行有效探索，实现数据向知识的高效转化过程。
+
+随着聚类集成研究的发展与数据分析要求的逐渐提高，目前的聚类集成也面临着一些局限性问题：（1）主要集中在对其本身算法细节上的改进，与其他技术的交叉研究仍然较为匮乏；（2）复杂数据通常伴随着带噪声的高维特征空间，容易造成聚类集成性能的下降；（3）算法缺乏自适应优化过程，在不同任务下的适用性差；（4）大多为启发式算法流程，聚类集成理论研究有待进一步探索；（5）对少量标注信息的利用率不足，容易造成资源浪费。基于上述研究背景及问题，本文旨在围绕聚类集成框架开展研究，结合机器学习与数据挖掘其他领域的技术，探索集成过程的创新性理论基础，基于特征子空间学习技术和自适应的优化方法构建聚类集成算法模型，突破无监督环境下的聚类性能瓶颈，提高半监督环境下的标注信息利用率，并在文本、生物信息、音频和图像等多个真实数据场景中进行验证与应用，从而为数字经济时代下的数据聚类分析手段提供前沿技术手段。
+
+
+\section{本文主要研究内容与贡献}
+
+\begin{figure}[tbh]
+	\centering
+\begin{tabular}{p{14cm}}
+	\includegraphics[width=140mm]{./figure/paper_overview.png}\\
+\end{tabular}
+\caption{本文的研究框架}\label{fig_papaer_overview}
+\end{figure}
+
+图\ref{fig_papaer_overview}给出了本文的研究框架。基于上述研究背景及聚类集成存在的局限性，本文主要围绕聚类集成算法，从集成成员选择策略、集成成员融合方法和半监督聚类集成三个方向入手开展研究工作，结合自适应优化、迁移学习思想、多目标优化、特征投影、主动学习等前沿技术，设计创新性聚类集成算法，解决聚类集成在理论基础、聚类性能、适用性、信息利用率和运行效率上的瓶颈问题，实现整体聚类准确率和鲁棒性的提升，并在文本、生物信息、音频和图像等多个真实数据场景中进行验证与应用。
+
+本文的主要研究内容和贡献具体如下：
+
+（1）针对集成成员选择策略偏好选择适用性差，缺乏全局优化的问题，本文提出了迁移聚类集成选择算法TCES，它通过结合迁移学习思想，将源领域的一致性和多样性关系迁移到目标领域，指导集成成员的自适应选择过程。此外，设计了多目标自进化策略，通过局部和全局演化过程，实现选择过程的全局优化。基于TCES，构建完整的迁移聚类集成框架，并在多个文本迁移聚类任务中验证了其有效性。
+
+（2）针对集成成员融合方法缺乏理论指导、协相关矩阵优化不足的问题，本文提出了基于协相关矩阵优化的聚类集成算法CC-CMO，设计了统一的目标函数来联合学习投影子空间、全局样本结构和局部样本邻接关系，同时考虑了标签空间和特征空间，更全面地进行协相关矩阵优化，并学习鲁棒的特征子空间，减少噪声特征的影响。该算法在生物信息、图像、音频等多种数据集上得到了有效性验证。
+
+（3）针对约束信息利用率低、查询更新效率低的问题，本文提出了基于密度峰值的主动聚类集成算法ADPE，同时考虑了样本代表性指标、全局和局部信息性指标，设计了标注样本的主动选择策略，提高约束信息利用率。此外，提出了标签快速更新算法，利用标签树结构提高主动查询后的标签更新效率。该算法在生物信息、图像、音频等多种数据集上验证了其有效性。
+
+
+\section{论文结构}
+
+\begin{figure}[tbh]
+	\centering
+\begin{tabular}{p{14cm}}
+	\includegraphics[width=140mm]{./figure/paper_structure.png}\\
+\end{tabular}
+\caption{本文的整体结构}\label{fig_paper_structure}
+\end{figure}
+
+本文共由5个章节组成，论文结构如图\ref{fig_paper_structure}所示，各章节具体内容如下：
+
+第一章是绪论，该章节主要从社会发展需求和智能化数据分析技术之间的密切联系入手，回顾了聚类集成算法在数据挖掘领域中的地位与由来，介绍了聚类集成算法在理论和应用上的研究现状。在此基础上，分析了现有的聚类集成研究工作上存在的局限性，引出本文的主要研究目标。最后，总结了本文的主要研究内容和贡献，并对本文的章节结构进行简要概括，从而便于阅读。
+
+第二章是与本文研究的相关理论与技术的介绍。该章节主要针对聚类集成框架、半监督聚类集成、迁移聚类和主动聚类等与本文研究内容密切相关的理论和技术进行归纳总结，阐述了本文所处研究领域的发展现状和主流技术方法，分析现有工作的优势和局限性，为后续章节研究工作的展开提供必要的知识与铺垫。
+
+第三章详细介绍了迁移聚类集成选择算法。
+
+第四章详细介绍了基于协相关矩阵优化的聚类集成算法。
+
+第五章详细介绍了基于密度峰值的主动聚类集成算法。
+
+最后，是本文的总结，以及对未来研究工作的计划与展望。
+
+\section{本章小结}
+本章主要从数字经济的时代背景出发，表明了聚类集成研究的重要意义，接着详细介绍了聚类集成算法的由来与研究现状，分析了现有工作存在的局限性，继而对本文的主要研究内容和贡献点进行概述。最后，对本文的各章节内容和文章结构关系进行了总结概括。
+
+
+\chapter{相关理论与技术介绍}
+\section{聚类集成算法}
+
+聚类算法是无监督学习领域的热门研究课题，它旨在寻找具有相似特性的样本并将其划分到相同类簇，既能用于寻找数据的内在分布结构，也能用于其他学习任务的前驱过程，具有广泛的用途。从基于原型的K-Means\cite{2-1}、基于层次的BIRCH\cite{2-2}、基于分布的GMM\cite{2-3}等经典聚类算法，到后来基于图的谱聚类\cite{2-7}、基于标签传播的AP算法\cite{2-5}和基于密度峰值的DenPeak\cite{2-4} 等新型聚类算法，研究者们分别设计了不同的聚类依据对数据类簇结构进行分析。对于对于同一个数据集，采用不同聚类算法、初始化或参数值，可能得到多样化的聚类结果，但和监督学习不同的是，我们没有训练集来对这些聚类结果的质量进行准确地衡量。虽然内部有效性指标，例如邓恩（Dunn）指标、戴维森堡丁（Davies-Bouldin）指数、类内距和类间距指标等\cite{1-8}，能够在某种程度上对聚类结果进行评估，但是在无监督环境下，它们并不能完全反映真实的类簇标签。在这种情况下，Kleinberg的理论\cite{2-6}表明，我们难以找到一种单一聚类算法，能够适用于所有数据集。
+
+为了提升聚类分析的整体性能，集成学习思想被应用到了聚类研究领域，提出了聚类集成算法\cite{1-4}\cite{1-5}。聚类集成算法基于“求同存异”的思想，从不同的角度对数据集类簇结构进行分析，并综合考虑多个聚类结果，中和各个结果中的错误标签，最终归纳出高质量的集成结果。相比于传统单一聚类算法，聚类集成算法希望通过集成学习的方式达到以下特性及优势\cite{1-4}：
+
+（1）鲁棒性：减少聚类结果的性能波动，达到单一聚类算法的平均性能以上；
+
+（2）统一性：集成结果在一定程度上要与各集成成员的总体相似程度达到最高；
+
+（3）先进性：各集成成员相互弥补，得到单一聚类算法无法达到的聚类效果；
+
+（4）稳定性：减少噪声和离群点对聚类过程的影响。
+
+在聚类集成算法研究方面，如图\ref{fig_consensus_framework}所示，主要围绕着它的三个步骤开展研究工作：首先设计多种聚类策略，利用单一聚类算法生成多个集成成员，即集成成员生成步骤；接着对这些集成成员进行筛选，剔除噪声和冗余信息，即集成成员选择步骤；最后综合考虑剩下的集成成员，归纳出最终聚类结果，即集成成员融合步骤。接下来，我们将对这三个步骤的相关理论及研究现状进行详细介绍。
+
+\begin{figure}[tbh]
+	\centering
+\begin{tabular}{p{14cm}}
+	\includegraphics[width=140mm]{./figure/consensus_framework.png}\\
+\end{tabular}
+\caption{聚类集成框架的三个主要步骤}\label{fig_consensus_framework}
+\end{figure}
+
+
+\subsection{集成成员生成}
+给定待聚类的无标签数据集$X=\{x_1,...,x_n\}$，聚类集成算法的第一步，便是对该数据集进行多次聚类，生成多样化的聚类结果集合$\Pi=\{\pi_1,...,\pi_m\}$，其中$m$为基础聚类结果的个数。在聚类集成中，集合$\Pi$称为集成池，其中的每个基础聚类结果$\pi_i$称为集成成员，而用于生成集成成员的聚类算法称为基聚类算法。在集成分类中，弱分类器通过集成学习能实现性能上的突破，该现象也在聚类集成的早期研究中得到了验证，即使用简单的聚类算法生成的多个聚类结果通过聚类集成，也能达到更好的性能效果。例如，Topchy等人\cite{4-14}\cite{4-15}使用经典的K-Means 算法，甚至最简单的数据投影和数据随机划分作为基聚类方法，实验表明聚类集成都能通过融合多个弱聚类结果，达到更高聚类准确性。而随着聚类集成研究的不断深入，出现了各式各样的集成成员生成策略，实现对数据集的多角度及更全面的类簇结构分析，为后续的集成过程奠定基础。集成成员生成主要可以分成以下几种策略：
+
+（1）使用不同基聚类算法：聚类算法具有不同的划分依据和目标函数，因此能从不同角度去看待数据集。例如，Yousefnezhad等人\cite{4-16}使用了10种基聚类算法，在每种算法中还分别采用不同的距离度量方式，使得所生成的集成成员之间具有更大的独立性和多样性；Huang等人\cite{4-17}选择K-means 和RPCL\cite{2-8}算法来构造集成池，用于在聚类集成过程中确定高置信度的代表性样本。
+
+（2）使用不同参数及初始化：对于同一个基聚类算法，既然我们难以确定哪些参数是最优解，可以在每一次运行时都在一定范围内随机选择参数及初始化状态，增加集成池多样性。例如，Yang等人\cite{4-11}使用基于隐马尔科夫模型（HMM）的基聚类算法处理时序数据集，并采用不同的初始化生成多个HMM模型，克服传统方法初始化选择困难；Huang等人\cite{4-19}运行多次K-Means算法生成集成池，每次运行前在$[2,\sqrt{n}]$范围内随机选择类簇数目并对聚类中心进行随机初始化。
+
+（3）使用不同样本表示方法：原始特征空间存在高维及带噪声问题，因此可以考虑对特征空间采用不同变换方式，常用的有随机子空间、特征映射、特征空间随机切割等方法。例如，Rathore等人\cite{4-18}使用生成多个随机投影矩阵，将原始数据集投影到多个随机特征空间中，接着在各个子空间中使用模糊C-Means算法得到集成成员；Yu等人\cite{4-23}利用近邻传播（AP）算法\cite{2-5}能够自动挖掘类簇数目的特性，对特征进行多次聚类，从而得到多个特征子空间，接着又在各个子空间下对样本运行AP算法生成集成成员，该集成成员生成策略的优点在于在每个特征子空间中，关联度高的特征被归纳到了一起，能够有效减少特征空间的信息冗余度。
+
+（4）使用不同的样本子集：基聚类算法不对所有样本进行聚类，而是只分析其中一部分样本，常见的有Bagging和Boosting方法。例如，Yu等人\cite{4-20}使用Bagging方式生成多个样本子集，然后运行自组织聚类算法（SOM）对数据集的结构进行多角度分析；与传统并行式的集成成员生成模式不同，Yang等人\cite{4-21}设计了一种基于混合采样的集成成员生成机制，在每一轮迭代中，基于样本权重进行Bagging采样，并对该样本子集只运行一次基聚类算法得到集成成员，接着通过最小化聚类结果的损失函数，对样本权重进行更新，使得损失越大的样本在下一轮迭代中越容易被选中，可以看到，这种Boosting的集成成员生成模式有利于关注到聚类困难的样本。
+
+（5）使用混合方法：通常来说，目前的研究工作大多都不会只局限于使用上述四种策略中的某一种来生成集成成员，而是有机结合其中某几种策略，从而达到集成池多样化的提升，实现对数据集更多角度的分析过程。例如，Yu等人\cite{4-24}使用随机采样、特征投影等技术对样本空间和特征空间同时进行数据变换，并选择NeuralGas算法\cite{2-9}和PAM算法\cite{2-10}作为基聚类算法；Yang等人\cite{4-22}使用K-means 作为基聚类算法，并同时使用随机参数选择和随机特征选择策略来生成集成池，在实验中，作者分别对这两种策略进行分析，结果表明虽然随机选择的类簇数目参数不一定等于真实类簇数，但通过聚类集成也可以达到更好的聚类效果，而随机特征选择策略在一定程度上能剔除噪声特征，从而相较于使用原始特征空间能进一步提升聚类准确率。
+
+综上所述，在研究过程中，集成成员生成阶段考虑的主要因素有：聚类质量、聚类多样性和生成效率\cite{1-4}\cite{1-5}。在聚类质量方面，使用一些对性能较好、任务匹配的基聚类算法，或对噪声特征进行预处理，有助于生成质量更高的集成成员；在聚类多样性方面，基聚类算法的选择、包括算法参数的选择并不能保证完全适合任务数据集，因此通常会尽可能生成多样化的集成成员；在生成效率方面，因为需要多次运行基聚类算法，在处理数据量大、特征维度高的数据集时，时间、空间复杂度较高的算法效率低下，幸运的是，集成成员生成是相对独立的过程，可以很方便地进行分布式计算部署，缓解效率问题。可以看到，在一定程度上，上述三个因素之间是存在制约关系的，聚类质量的提升通常伴随着多样性和运行效率的降低，而提升聚类多样性能够通过融合过程突破聚类性能上限\cite{4-14}\cite{4-15}。因此，集成成员生成阶段，研究者们在基聚类算法有一定性能保障的条件下，会增加聚类多样性，并通过后续的集成成员选择和融合过程，取其精华，去其糟粕，实现最终的聚类性能提升。
+
+
+\subsection{集成成员选择}
+在有监督集成学习中，集成剪枝过程能够在减少基学习器数目的同时，提升集成模型的泛化性能\cite{3-11}。研究表明，我们利用多种策略生成的集成成员并非都是有用的，其中可能包含了大量冗余信息和噪声成员\cite{1-6}。当噪声成员过多，大量被错误归类的样本难以得到中和，不可避免会对最后的融合过程造成影响；而当冗余成员过多，各成员中包含的同质化信息可能掩盖了其他关键信息，无法发挥聚类集成的“集思广益”特点，并且降低融合效率。因此，基于集成剪枝的思想，集成成员选择过程被提出\cite{5-1}，用于对集成池$\Pi=\{\pi_1,...,\pi_m\}$中的成员进行过滤，剔除冗余和噪声，得到精简后的集成池$\Pi^*=\{\pi_1,...,\pi_{m^*}\}$，其中$m^*<=m$。在研究中，该过程也被称作聚类集成选择算法。我们对集成成员选择方法进行了归纳总结，主要有基于一致性和多样性的方法、基于类簇度量的方法和基于权重的方法。
+
+（1）基于一致性和多样性的集成成员选择：基于“求同存异”的思想，“求同”即要保证集成成员之间存在一定程度相关性，若某个成员与其他成员相差甚远，则可能包含噪声信息；“存异”即允许集成成员之间存在一定差异性，在边界样本或模糊样本上的划分存在不同看法，是可以接受的。因此，一致性和多样性指标成为了聚类集成选择算法中两个关键度量指标，他们分别评估了选择后的成员子集$\Pi^*$在“求同”和“存异”上的程度，其经典的定义方式如下\cite{5-1}：
+
+\begin{equation}
+Quality(\Pi^*)=\sum_{\pi_i\in \Pi^*} \sum_{\pi_j\in \Pi \& \pi_i\neq \pi_j} Sim(\pi_i,\pi_j)
+\label{eq_quality}
+\end{equation}
+
+\begin{equation}
+Diversity(\Pi^*)=\sum_{\pi_i,\pi_j\in \Pi^* \& \pi_i\neq \pi_j} (1-Sim(\pi_i,\pi_j))
+\label{eq_diversity}
+\end{equation}
+
+$Sim(\pi_i,\pi_j)$用于度量两个集成成员之间的相似度，常见的有$NMI$指标\cite{4-1}或$ARI$指标\cite{0-2}：
+
+\begin{equation}
+NMI(\pi_i,\pi_j)= \frac{2\sum_{a=1}^{k_i}\sum_{b=1}^{k_j}\frac{|C^i_{a}\cap C^j_{b}|}{n}log\frac{n|C^i_{a}\cap C^j_{b}|}{|C^i_{a}||C^j_{b}|}}{-\sum_{a=1}^{k_i}\frac{|C^i_{a}|}{n}log\frac{|C^i_{a}|}{n}-\sum_{b=1}^{k_j}\frac{|C^j_{b}|}{n}log\frac{|C^j_{b}|}{n}}
+\label{eq_nmi}
+\end{equation}
+
+\begin{equation}
+ARI(\pi_i,\pi_j)= \frac{\sum_{a=1}^{k_i}\sum_{b=1}^{k_j}\binom{|C^i_{a}\cap C^j_{b}|}{2}-\Omega_3}{(\Omega_1+\Omega_2)/2-\Omega_3}
+\label{eq_ari}
+\end{equation}
+
+\begin{equation}
+\Omega_1=\sum_{a=1}^{k_i}\binom{|C^i_{a}|}{2},~\Omega_2=\sum_{b=1}^{k_j}\binom{|C^j_{b}|}{2},~\Omega_3=\frac{2\Omega_1\Omega_2}{n(n-1)}
+\label{eq_ari_addition}
+\end{equation}
+其中$\pi_i=\{C^i_{1},...,C^i_{k_i}\}, \pi_j=\{C^j_{1},...,C^j_{k_j}\}$，$C^i_{a}$和$k_i$分别表示$\pi_i$中的第$a$个类簇和总类簇数目，$C^j_{b}$和$k_j$同理。在取值范围上，$NMI(\pi_i,\pi_j)\in[0,1], ARI(\pi_i,\pi_j)\in[-1,1]$，它们的值越大，表示$\pi_i$和$\pi_j$越相似。
+
+可以看到，一致性和多样性指标之间是存在一定的矛盾关系的，一方面，一致性高的成员子集能代表大多数赞同的结果，具有较好的质量保证，达到去噪音的效果，另一方面，多样性高的成员子集能吸收各方面意见，相互“中和”错误标签，达到去冗余的效果。不同研究者对这两个指标的偏好选择有不同看法，Kuncheva等人\cite{5-2}认为选择多样性最高的成员子集能够有效提升聚类集成效果；Hadjitodorov 等人\cite{5-3}设计了三种多样性度量方式，在实验中发现随着多样性的增加，集成性能呈现“杯状”趋势，因此作者倾向于选择中等多样性的成员子集；上述两项研究都只考虑了多样性指标，Fern\cite{5-1}首先考虑了一致性和多样性之间的权衡关系，并设计了三种选择算法：JointCriterion方法通过设定人工参数将一致性和多样性指标结合到统一的子集选择目标函数中，并基于贪心算法进行优化求解，ClusterSelect方法先用谱聚类对集成池进行聚类，不同类簇代表了不同多样性的集成成员，最后选择各个类簇中一致性最高的集成成员，ConvexHull方法通过将集成成员映射到一致性——多样性散点图中，并利用凸包性质进行成员选择；Azimi等人\cite{5-4}先对所有集成成员进行融合，得到初始集成结果$\pi^*$，并设置参数阈值$\alpha$，若$\pi^*$和所有集成成员的平均相似度大于$\alpha$，则不进行成员选择，若平均相似度小于$\alpha$，则选择多样性最高的集成成员；Jia 等人\cite{5-5}利用Bagging方法对集成池进行抽样，得到多个成员子集并对这些子集成员进行融合，并选择一致性最高的几个集成结果进行二次融合；Zhao 等人\cite{5-6} 利用多种内部聚类有效性指标重新定义一致性度量，并结合多样性指标形成统一目标函数，利用贪心策略在每次迭代中将当前最优集成成员加入所选择的成员子集中。综上所述，现有的工作基于这两个指标之间的权衡关系设计集成成员选择方法，主要可以分成几种策略：只考虑多样性指标\cite{5-2}\cite{5-3}；只考虑一致性指标\cite{5-5}\cite{5-7}\cite{5-10}；利用参数或阈值对一致性和多样性指标进行权衡考虑\cite{5-1}\cite{5-4}\cite{5-8}\cite{5-9}；同时最大化一致性和多样性指标\cite{5-1}\cite{5-6}。
+
+（2）基于类簇度量的的集成成员选择：在聚类任务中，数据集可能包含多种类簇结构，单个集成成员中可能只包含部分优质类簇结构，难以挖掘所有不同模式的结构。因此，除了选择集成成员，另一种思路便是从更细致的角度出发，选择集成成员中的类簇。这类方法的研究主要集中于设计度量类簇质量的指标以及选择策略，Law等人\cite{5-11}首先将类簇和聚类结果之间的相似度$Sim(C,\pi)$转化为两个聚类结果之间的相似度$Sim(\pi_1,\pi_2)$，其中$\pi_1=\{C,X-C\}, \pi_2=\{C',X-C'\}$，当$P$的类簇中包含一半以上的样本同时处于$C$中，这些类簇的集合为$C'$，通过这种转化方式，将类簇与集成池的平均相似度作为该类簇的质量指标。接着，通过类簇重叠度定义了类簇之间的多样性指标。最后，作者引入选择向量，设计了统一的目标函数，并应用爬山算法进行启发式搜索，寻找最小化目标函数的类簇子集；Alizadeh等人\cite{5-12}提出了APMM算法来度量类簇稳定性，对于$APMM(C,\pi)$，类簇$C$可以视为只有一个类簇的聚类结果$\pi_1$，而在$\pi$中，基于$\pi$的类簇划分情况，可能将$C$中包含的样本划分到多个类簇中，从而构造只包含$C$中样本的聚类结果$\pi_2$。经过转化，就可以利用$NMI$指标进行度量，即$APMM(C,\pi)=NMI(\pi_1,\pi_2)$，而类簇$C$的稳定性即它与所有集成成员的平均$APMM$值，当稳定性超过设定的阈值，该类簇便被选入类簇子集中；Parvin等人\cite{5-13}\cite{5-14}设计了一种模糊局部自适应聚类算法，在聚类过程中根据不同特征包含的信息量赋予合适的类簇权重，但是算法包含了两个参数，在无监督环境下难以调参。因此，作者基于不同参数对生成集成池，利用类簇稳定度指标选择高质量类簇，变相选择了合适的参数对，最后融合所选择的类簇得到最终聚类结果。实验表明，该方法能有效减少人工参数对聚类算法性能的影响，达到更鲁棒、更准确的聚类效果。
+
+（3）基于权重的方法的集成成员选择：传统集成成员选择方法对集成成员赋予0-1“硬”权重，将所有选择的集成成员的重要程度视为相同，忽略了不同集成成员的贡献程度。而基于权重的方法则通过对集成成员进行加权，进行“软”选择。Zhou等人\cite{5-15}认为与其他成员相似度越高，则该集成成员包含的信息就越少，因此会赋予更低的权重，最后只选择权重高于阈值的集成成员；Li等人\cite{5-16}通过最小化集成结果和集成成员之间的距离构建目标函数，并引入权重向量，最后基于非负矩阵分解（NMF）技术进行交替更新优化，得到每个集成成员的权重；Vega-Pons等人\cite{5-17}提供两种聚类结果相关性分析场景，用于避免其中的噪声干扰。第一种场景下，对多种聚类评价指标没有明确偏好，则集成成员的评价以少数服从多数的原则，赋予小众集成成员较低的权重。而在第二种场景下，使用者期望最大化聚类评价指标，则离最佳指标越接近的集成成员能得到更大的权重。Yang等人\cite{4-21}通过最小化聚类损失函数，不仅仅对损失大的样本赋予更高权重，同时也能对集成成员的总体质量赋权。综上所述，基于权重的方法的集成成员选择方法基于集成成员质量赋予不同权重，达到在后续融合过程的不同贡献程度。同时，在研究过程中，这类方法通常和基于权重的集成成员融合方法是作为一个整体去进行设计的。
+
+
+\subsection{集成成员融合}
+在得到待融合的集成池$\Pi^*=\{\pi_1,...,\pi_{m^*}\}$后，聚类集成的第三步便是设计集成成员融合方法，得到最终聚类结果$\pi^*$。在研究中，该过程也被称作一致性集成算法。这个步骤是聚类集成研究中最受关注的部分，因为它是实现“量变到质变”的关键，设计有效的融合方法，能有效提升聚类效果。经过多年来的积累，学者们针对不同场景、基于不同思想提出了各式各样的方法。总的来说，这些方法主要可以分成两大类：基于一致性划分的方法和基于相关关系的方法。
+
+基于一致性划分的方法的主旨思想是寻找最优的聚类结果，使其与所有集成成员间的相似度达到最大。一般来说，该方法会涉及更正式的理论定义与推导，具有更加严密的数学依据，它的目标可以形式化定义为：
+\begin{equation}
+\pi^*=\arg\max_{\pi}\sum_{\pi'\in \Pi^*}Sim(\pi^*,\pi')
+\label{eq_consensus_objective}
+\end{equation}
+可以看到，设计相似度函数$Sim(\pi^*,\pi')$及该目标函数优化方法是这类方法的主要挑战性难题。当使用Mirkin距离作为相似度度量时\cite{4-25}\cite{4-26}，优化求解过程是一个NP难的问题，虽然有一些方法\cite{0-3}\cite{0-4}能够将该问题转化为组合优化的问题，实现精确求解，但是时间复杂度过高，只能适用于小数据集。针对这个问题，另一些学者寻找该问题的近似求解，Filkov等人\cite{4-25}设计了三种启发式算法，基于遗传优化、模拟退化以及贪心算法，构建对集成结果的启发式搜索过程；Gionis等人\cite{4-26} 将该问题转化为求解一个样本距离和的目标，并通过标签迭代更新的方式寻找近似解。除此之外，Topchy等人\cite{4-15}基于信息熵定义了相似度度量，该目标函数可以转化为$NMI$ 的形式，并使用K-Means算法求解；Vega-Pons等人\cite{4-27}设计了基于核函数的相似度度量，并转化为可再生希尔伯特空间中的核函数，该问题可使用模拟退火算法进行求解；Wu 等人\cite{4-29}基于类别性能函数构建了聚类集成的目标函数，通过理论证明了该问题可以等价于面向二元数据集的K-Means的目标函数；Liu等人\cite{4-28}在上一项成果的基础上进一步研究，证明了基于图的集成方法能够等价到带权重的K-Means问题，实现高效、准确的集成成员融合过程。综上所述，基于一致性划分的方法虽然有较好的理论依据，但是在实际使用过程中条件较为苛刻，灵活性低，且难以得到精确求解，因此在近年来相关研究工作较少。
+
+\begin{figure}[tbh]
+\begin{minipage}[t]{0.5\linewidth}
+\centering
+\includegraphics[width=5cm]{./Figure/ensemble_info_matrix_1.png}
+\caption*{(A)包含两个集成成员的集成池}
+\end{minipage}
+\begin{minipage}[t]{0.5\linewidth}
+\centering
+\includegraphics[width=4cm]{./Figure/ensemble_info_matrix_2.png}
+\caption*{(B)二元划分矩阵（Binary partition matrix）}
+\end{minipage}
+\begin{minipage}[t]{0.5\linewidth}
+\centering
+\includegraphics[width=5cm]{./Figure/ensemble_info_matrix_3.png}
+\caption*{(C)协相关矩阵（Co-association matrix）}
+\end{minipage}
+\begin{minipage}[t]{0.5\linewidth}
+\centering
+\includegraphics[width=5cm]{./Figure/ensemble_info_matrix_4.png}
+\caption*{(D)类簇相似度矩阵（Cluster-similarity matrix）}
+\end{minipage}
+\caption{三种集成信息矩阵（Ensemble-information matrix）}
+\label{fig_ensemble_info_matrix}
+\end{figure}
+
+基于相关关系的方法首先对集成池中的样本或类簇之间的关系进行挖掘，并将其总结归纳到集成信息矩阵（Ensemble-information matrix）中，最后基于该矩阵使用单聚类算法便可得到最终聚类结果。基于Strehl等人\cite{4-1}的研究，有三种经典的集成信息矩阵，如图\ref{fig_ensemble_info_matrix}所示，图\ref{fig_ensemble_info_matrix}(A)为包含两个集成成员的集成池$\Pi=\{\pi_1,\pi_2\}$，其中$\pi_1=\{C^1_1,C^1_2\}$和$\pi_2=\{C^2_1,C^2_2,C^2_3\}$分别将数据集$X=\{x_1,...,x_6\}$划分成了两个和三个类簇。图\ref{fig_ensemble_info_matrix}(B)表示二元划分矩阵$P_{BPM}$（Binary partition matrix），它通过$0-1$元素值表示了每个样本到各个类簇的二元归属关系，定义如下：
+\begin{equation}
+P_{BPM}=(P^1~...~P^{m^*})\in \mathbb{R}^{n\times r}
+\label{eq_bpm1}
+\end{equation}
+\begin{equation}
+P^i_{ab}=\begin{cases}
+1, & x_a\in C^i_b\\
+0, & x_a\notin C^i_b
+\end{cases}
+\label{eq_bpm2}
+\end{equation}
+其中，$r=\sum_{i=1}^{m^*}k_i$为集成池中所有类簇数目。图\ref{fig_ensemble_info_matrix}(C)表示协相关矩阵$P_{CAM}$（Co-association matrix），矩阵中的每个元素代表了将对应样本对归到相同类簇的集成成员在集成池中的占比,定义如下：
+\begin{equation}
+P_{CAM}=\frac{1}{r^*}P_{BPM}P^\mathsf{T}_{BPM} \in \mathbb{R}^{n\times n}
+\label{eq_cam}
+\end{equation}
+图\ref{fig_ensemble_info_matrix}(D)表示类簇相似度矩阵$P_{CSM}$（Cluster-similarity matrix），矩阵中的每个元素代表了对应类簇之间的相似度，定义如下：
+\begin{equation}
+P_{CSM}=\{ Sim(C_a,C_b) \}_{r\times r} \in \mathbb{R}^{r\times r}
+\label{eq_csm}
+\end{equation}
+其中$a,b \in \{1,...,r\}$。而Strehl等人\cite{4-1} 提出的三种聚类集成算法，正好对应了这三种集成信息矩阵：CSPA算法将矩阵$P_{CAM}$视作样本相似度矩阵，构建带权重无向图；HGPA算法基于矩阵$P_{BPM}$构建超图，以超边表示各个类簇；MCLA算法以类簇为节点，矩阵$P_{CSM}$为节点间权重，构建基于类簇的无向图。最后，作者使用图割算法METIS\cite{2-11} 对这些图进行划分，得到最终聚类结果。除此之外，利用矩阵CAM得到样本相似度后，可以使用其他一系列聚类算法得到最终聚类结果，例如层次聚类\cite{4-30}\cite{4-32}、谱聚类\cite{4-31}\cite{4-33} 等。
+
+显而易见，如果能够得到优质的集成信息矩阵，将更容易提升聚类集成性能。而传统的矩阵计算方法过于简单，会损失集成池以及原始数据集中的很多关键信息。因此，改进基于相关关系的聚类集成算法，构建更优质的集成信息矩阵，逐渐成为近年来聚类集成的热门研究方向\cite{1-9}。我们对这些方法进行了总结归纳，可以将现有相关工作归为以下四个大类。
+
+（1）基于权重的方法：该方法在计算集成信息矩阵时，一些工作考虑引入集成成员或类簇的贡献度权重。例如，Yang等人\cite{4-11}提出了一个双权重策略用于同时度量集成成员和类簇的稳定度，并用于计算带权重的协相关矩阵；Huang等人\cite{4-19}基于信息熵度量了类簇和所有集成成员的划分一致性，并将其作为权重引入协相关矩阵中；Yang等人\cite{4-22} 结合了Bagging和Boosting的采样优势，提出了对集成成员和样本权重的自适应优化算法，得到带权重的划分矩阵，并将其视作样本新的特征空间，使用K-Means算法对其聚类得到最终聚类结果；Yousefnezhad等人\cite{4-16}根据群智理论，在计算协相关矩阵时，对多样性较高的集成成员赋予了更大的权重。
+
+（2）基于图的方法：该方法首先以样本或类簇为节点构建图，并利用图相关理论，间接或直接探索节点之间的模糊成对关系，最终用于改进集成信息矩阵。例如，Iam-On等人\cite{4-34}\cite{4-35}以类簇为节点构建带权重无向图，构造节点对的三元组关系，利用共享节点去计算去计算类簇之间的隐含关系，最终得到模糊划分矩阵；基于类似思想，Huang 等人\cite{4-17}从集成池中抽取置信度高的样本构成代表性类簇，构建类簇节点图并运行$T$步随机游走算法，得到类簇之间的多步间接关系；Huang等人\cite{4-36}在类簇节点图上使用快速传播算法，得到了节点之间的转移概率向量，并同时结合样本间关系信息构造协相关矩阵。
+
+（3）基于混合信息的方法：该方法不止从集成池中挖掘相关关系，同时还考虑了原始数据集。例如，Bai等人\cite{4-37}基于信息理论的概率推导，衡量了集成成员和原始样本的不确定性，得到模糊协相关矩阵；Zhong等人\cite{4-38}在样本层面利用概率密度估计计算原始特征空间中样本对属于同个类簇的条件概率，在类簇层面基于集成池计算了类簇稳定性，最终将两者相结合构造协相关矩阵；Gullo等人\cite{4-39}维护一个基于样本的表示矩阵和一个基于特征的表示矩阵，前者表示样本到各类簇的归属概率，后者表示各特征对类簇的重要性，作者结合原始特征空间和集成池，从样本和特征层面同时对这两个矩阵进行学习。
+
+（4）基于目标函数的方法：该方法不是人为定义集成信息矩阵的计算方式，而是设计目标函数，通过优化求解得到改进后的集成信息矩阵。例如，Zhou等人\cite{4-40}最小化协相关矩阵和理想样本邻接矩阵之间的Kullback-Leibler散度，并加入正则化项对矩阵进行低秩约束，最后设计了梯度下降优化算法来同时学习误差矩阵和目标协相关矩阵；在集成池中，仍存在划分模糊的样本，Yi等人\cite{4-41}从集成池中抽取置信度高的样本构成初始协相关矩阵，接着结合矩阵补全理论，引入噪声矩阵和低秩约束构建学习目标函数，通过优化求解，得到完整的协相关矩阵。
+
+综上所述，近年来集成成员融合研究主要集中于基于相关关系的方法上，相比于基于一致性划分的方法，这类方法能够很灵活地引入权重、图结构、原始特征空间和矩阵约束等额外信息，实现聚类集成性能的有效提升。然而，我们也发现了这些方法中存在的局限性：（1）前三类方法启发式地定义集成信息矩阵的计算公式，缺少理论依据与优化；（2）基于目标函数的方法目前仍然较少，而且都只考虑了集成池中的$0-1$归属关系，缺少了更细致、更完整的学习信息；（3）基于混合信息的方法虽然考虑了原始数据集，但是没有对特征空间中包含的噪声特征进行剔除，引入了噪声信息。
+
+\section{迁移聚类}
+传统的机器学习与数据挖掘技术在知识工程领域取得了巨大成功\cite{6-1}\cite{6-2}，然而这些方法都有一个普遍的假设：即训练集和测试集都处于相同的特征空间和数据分布下。当我们得到新的任务数据时，往往是没有标注信息的，而人工标注费时费力，历史积累的相关领域数据由于不同分布、不同特征空间而派不上用场\cite{6-6}。为了解决这个问题，利用已有数据的学习经验，提升对目标数据集的算法性能，迁移学习概念在NIPS-95会议上被提出。随着迁移学习研究的快速发展，诞生出了许多优秀的迁移学习算法，例如TrAdaBoost\ cite{6-3}、TCA\cite{6-4}、TAMAR\cite{6-5}以及和深度学习的结合\cite{6-7}\cite{6-8}。
+
+在无监督环境下，迁移学习能够利用高效利用相关领域的有标注或无标注数据，为无标注信息的目标数据集提供额外的指导知识，从而实现聚类性能的进一步提升，这类算法也称作迁移聚类算法。Dai等人\cite{6-9}提出了经典的STC算法，利用大量无标注的源领域辅助数据来指导目标领域较少数据的聚类过程。STC假设源领域和目标领域的数据处于相同的特征空间，通过在两个领域进行同时聚类，并最小化样本和特征之间的互信息，使得辅助数据通过一组共同的特征表示来影响目标数据的聚类过程，实现性能提升；Jiang等人\cite{6-10}\cite{6-17}基于图谱理论，设计了迁移学习版本的谱聚类算法TSC，TSC旨在保持数据的流型结构条件下寻找源领域和目标领域共同的低维特征表示，并同时基于协同聚类（Co-clustering）的目标函数，最大化两个领域之间的任务相关性；Yu等人\cite{6-11}针对文本迁移聚类问题提出了TCTC算法，首先利用谱聚类和LDA主题模型\cite{0-5}在带标签的源领域数据中抽取文本主题，接着通过条件概率模型将目标领域文本数据与主题模型进行匹配，进而转化为目标文本之间的相关关系；Samanta等人\cite{6-12}设计了两种迁移聚类框架，第一种方法迭代式地在两个领域数据集中运行K-means算法，并通过最小化类簇之间的映射关系实现性能的共同提升，而第二种方法则是基于非参数密度估计方法，将源领域的样本密度分布迁移到目标领域；Sun等人\cite{6-13}将最大熵聚类算法（MEC）\cite{2-12}扩展至迁移聚类中，利用源领域中的类簇中心来纠正目标领域的聚类过程；Qian等人\cite{6-15}则是结合模糊理论设计了跨领域的模糊隶属度差分测量方法，用于改进数据量完整的场景下的MEC算法性能缺陷；Deng等人\cite{6-14}将源领域中包含的类簇中心及特征权重融入模糊聚类的目标函数中，提出了迁移模糊C-Means 算法和迁移模糊子空间聚类算法；Hang等人\cite{6-16}构建跨领域的样本节点图，并基于AP算法\cite{2-5}对源领域的代表性样本信息进行转移学习，提高目标领域聚类模型的准确性。综上所述，虽然迁移学习在分类和回归任务上已经得到了非常成功的应用\cite{6-6}，但迁移聚类研究仍然较为匮乏。可以看到，目前的工作主要集中于对K-Means、MEC、谱聚类等单一聚类算法的改进，在聚类集成上的迁移学习研究仍然有待进一步探索。
+
+
+\section{半监督聚类集成}
+在无监督环境下，聚类性能很容易遇到瓶颈。为了进一步提高聚类准确率，可以适当引入少量标注信息，设计半监督聚类算法。
+
+
+\section{主动聚类}
+与堆叠隐藏层来提高准确性不同
+
+
+
+\chapter{基于多目标的混合优化集成}
+
+\section{概述}
+针对类别不平衡样本分类问题，许
+
+
+
+\section{基于多目标的混合优化集成算法}
+
+\subsection{基于密度的欠采样集成}
+
+首先，我们利用bagging的方式结合基于密度的欠采样算子从原始集合中获得d个子集。 接下来，我们在这些子集上训练分类器并对标签进行预测。最后，我们使用多数表决方案获得样本的最终预测标签。
+
+
+\section{时间复杂度分析}
+
+在本节，我们从时间复杂度方面对HOEC进行分析。HOEC的时间复下公式计算:
+
+
+\section{实验}
+在本节中，我们将在K的30种不平衡数据集上评估DBUE，DBUME，HOEC和其他方法的性能。
+
+\subsection{数据集}
+为保证实验的通用性和泛化性，我们选择的数据集包含着不同维度、不同样本数以及从2 到50的不平衡率（IR）。
+
+
+\section{本章小结}
+
+在本章中，我们提出了
+
+\chapter{渐进式混合集成}
+
+\section{概述}
+针对数据类别分布
+
+\section{混合分类集成}
+代表正类和负类样本集。$N$ 是
+${T_r}$的样本数目，$m$是特征维度。正类和负类样本个数分别记为$N_{p}$ 和 $N_{n}$。
+
+
+\section{渐进式混合集成}
+在本章第二节的混合集成框架中，集成
+
+
+\section{时间复杂度分析}
+在本节，我们从时间复杂度方面对PHCE进行
+
+
+\section{实验}
+在本节中，我们将在
+	
+
+
+\section{本章小结}
+
+在本章中，我们提出了一种
+
+
+\chapter{增量式带权重宽度集成系统}
+
+\section{概述}
+作为一种新颖而高效的机器学习算法，
+
+\section{增量式带权重宽度集成}
+
+\subsection{带权重的宽度学习系统}
+
+给定训练样本集计算负担。
+
+\section{实验分析}
+在本节中，我们在来自U0个真实世界不平衡数据集上比较并分析了WBLS，AWBLS，IWEB与其他方法的性能。
+为了确保实验的通用性和多样性，选择的数据集具备不同维度的属性，样本数量以及从2.46到58.4的不同不平衡率(IR)。
+
+在这些数据集中，ecoli-0-1-4-7-2源自Ecoli 数据集，其中cp，im，imU中的样本被设置为正类，imS，imL，om和omL中的样本被设置为负类。 Led7digit - 0-2 -4 -5 - 6-7 - 8 -9  vs -1源自LED Display Domain 数据集，其中将类别0、2、4、5、6、7、8 和9 之中的样本设为正类样本，将类别1中的样本设为负类类别。 Cleveland - 0  vs -  4 源自Cleveland数据集，其中来自类别0 和类别4 的样本分别设置为正类和负类。 Poker -  8 \-  9  vs - 6源自Poker Hand 数据集，其中来自8-9 类和6类的样本分别设置为正类和负类。
+
+\subsection{参数分析}
+表IWEB中的参数设置。对于BLS及其变体，在$(50,1000)$范围内通过网格搜索设置特征节点和增强节点的数量。 接下来，我们将研究参数$ w $在自适应权重生成过程中的影响。 我们选取了不平
+
+\subsection{BLS、WBLS、AWBLS 和 IWEB 的性能对比}
+IWEB算法的核心部分包括自适应权重生成过程和增量集成机制。 我们从2.46到58.4的30个具有不同不平衡率（IR）的不平衡数据集中选择12个，用以探讨算法不同阶段的影响。
+我们将IWEB与三个IWEB，AWBLS，WBLS和BLS的G均值分类结果。我们注意到，在所有这些数据集上，IWEB 均优于其他的竞争对手。 主要有两个原因：
+
+（1）自适应权重生成过程是IWEB中的关键部分。作为IWEB模型中的基分类器，AWBLS在所有这些数据集上均优于WBLS。 例如，在ozone-level数据集上，AWBLS的G-mean平均值为0.7253，这比WBLS算法所获得的平均值更高。主要原因在于：基于密度的自适应权重生成机制在密度计算中同时考虑了类间距离和类内距离，更加充分地引入了原始数据先验分布信息，从而进一步区分了样本之间的差异，并减少了不平衡数据中异常值或噪声点的影响。
+
+（2）与AWBLS相比，IWEB在所有数据集上均获得了最佳性能，这表明增量集成框架有助于改善最终分类效果。原因是增量集成机制考虑了数据的整体损失函数，更加重视难处理的样本，进一步提高了分类的置信度，增强了判别能力。通过集成多个AWBLS，单个分类器的负面影响将非常有限，即使基分类器之一与真实结果偏离较大，整体偏差也可以比较小。
+
+
+\subsection{与单一不平衡分类器以及不平衡集成分类器的比较}
+为了展现所提出方法的有效性，我们将IWEB和其他经典方法进行了比较。这些方法包括SMOTE-BLS，RUS-BLS， FSVM-CIL\cite{FSVM}，WELM\cite{welm}以及MDO\cite{MDO}。n给出了IWEB和单一不平衡分类算法之间的比较结果。从结果可以看出，IWEB 在30个数据集中的28 个上获得了最佳性能。主要有两个原因：（1）IWEB 生成多个不平衡分类器，这些分类器通过增量机制集成到集合中，从而提供更准确，可靠和稳定的结果。 （2）自适应权重生成策略有助于利用样本先验分布信息构建合理的权重矩阵。与单一不平衡学习方法相比，IWEB 在大多数数据集上可获得更好的结果。
+
+此外，我们将IWEB与不平衡集成分类算法进行了比较，包括Boosting-WELM(BWELM) ，Imbalance-XGBoost(IXGB)\cite{IXGB}，Self-paced Ensemble(SPE)\cite{spe}，Easy-Ensemble(EEC)和RAMOBoosting(RAMO)。
+表述了不同算法之间G均值的比较结果。 IWEB在24个数据集中获得了最佳性能。对于具有挑战性的数据集p，其他不平衡集成方法只能获得比随机猜测更好的结果，而IWEB 可获得最佳的G-mean值
+
+原因主要有两个：（1）IWEB采用基于密度的权重计算来自适应地获取先验分布信息并生成相应的权重矩阵，能够可以生成更具多样性与有效性的分类器。（2）IWEB中的增量集成框架提高了单个分类器AWBLS的稳定性和鲁棒性，从而进一步提升了模型的性能。
+
+\subsection{非参数检验}
+我们采用非参数检验的方式来衡量6种算法在多个数据集上的性能，这些算法包括IWEB，SPE，Easy Ensemble，Boosting weighted ELM，ImbalanceXGBoost和RAMOBoosing。 在非参数统计检验方法中，Friedman种经典的检验方法，用于评估多种方法之间的差异。当统计差异显著时，将继续采用多种比较测试来评估控制方法IWEB与其他对应方法之间的差异。表从结果我们可以发现IWEB算法的平均排名最高果显示了IWEB 与其他方法之间的显著性水平。表中的所有p值均小于0.05，这意味着IWEB与其他不平衡集成分类算法相比有显著的改进。
+
+
+\section{本章小结}
+在本章中，我们研究了如何改进BLS模型并应用在不平衡数据分类上，我们提出了一种用于不平衡数据分类的增量式带权重集成宽度学习系统。首先，我们设计了一种加权BLS方案，该方案为每个样本分配一个权重。接下来，采用同时考虑类间和类内信息的基于密度的权重生成机制来自适应地引导权重矩阵生成。最后，我们设计了一个增量集成框架，以进一步提高单个分类器的鲁棒性。我们在30个真实世界的不平衡数据集上进行了实验，并得出以下结论：（1）带权重的BLS可以处理类别分布不平衡的数据。（2）充分考虑原始数据先验分布信息的自适应权重生成机制可以提升WBLS的性能。（3）集成了多个AWBLS的增量集成框架进一步提高了模型的泛化能力。（4）在多个真实世界数据集上的实验结果表明IWEB 优于其他方法。作为未来的工作，我们将进一步探索IWEB 的特性，并研究我们的模型在半监督问题中的可扩展性。
+
+
+\chapterx{结\quad 论}
+\sethead[][{\headfont{}\thesissubject}][] % 重设页眉偶数页
+  {}{{\headfont{}结\quad 论}}{} % 重设页眉奇数页
+
+在全球信息化的浪潮下，我们在日常生活、生产中产生的数据量在爆炸性地增长，如何从海量数据中挖掘并分析出富有价值的信息是机器学习研究者们的一个重要课题。在过去的数十年，大量的机器学习算法被相继提出，也成功应用于各种生产与生活应用中。然而，随着实际应用领域的不断拓展，新的挑战和问题层出不穷。针对不平衡数据的学习作为其中一项重要的挑战，也引起了越来越多研究者的关注。与此同时，集成学习作为一类经典的机器学习方法，在提高模型的准确性和鲁棒性方面发挥着重要作用，也被大量应用于各大领域。在集成学习研究中，如何在学习过程中增加成员的多样性是提升模型性能的关键所在。在针对不平衡数据的分类问题中，集成学习能够提供统一的框架用于分析异构性很强的不平衡数据，实现对不平衡数据的融合、建模和挖掘，并从中寻找出有价值的规律。本文围绕着不平衡数据分类方法与集成学习算法相结合，从数据层面、算法层、集成层面展开研究，分别提出了三种不平衡数据分类算法，完成了一些具有创新性的工作。本文主要工作包括以下几个方面：
+
+（1）我们设计了一种基于多目标的混合优化集成算法，在这个算法中，我们结合样本分布信息设计了基于密度的欠采样方法，同时，利用这种欠采样方法训练多个分类器得到集成模型，之后，我们利用数据集相似性对预测结果做多目标优化，并提出了基于密度的欠采样多目标优化集成算法(DBUME)。最后，采用ADMM算法对DBUME和代价敏感方法得到的两种预测结果进行优化集成，从而在一定程度上形成互补，提升模型的泛化能力。
+
+（2）本文提出了一种混合分类集成算法（HCE）来处理不平衡数据分类问题，在HCE中，我们采用度量学习的方法为输入数据寻找更合适的映射空间，之后，我们设计了自适应两阶段欠采样方法来生成平衡的数据子集。在两阶段过程中我们同时考虑信息量丰富的样本以及代表性强的样本，并且利用自演化的方式进行优化选择。此外，考虑到集成框架中的子分类器存在着冗余性、无效性，我们提出了渐进式混合分类集成框架(PHCE),
+主要包括基于度量的数据空间转换和自适应的两阶段欠采样过程。基于度量的数据空间转换能够为输入数据找到更合适的映射空间，而自适应两阶段欠采样过程会同时考虑信息量样本和代表性样本，从而生成平衡的数据子集。此外，我们设计了一种渐进式混合分类集成框架（PHCE），利用具有局部和全局评估标准的渐进式机制来选择集成成员，进一步提升模型的性能。
+
+（3）本文在宽度学习系统的基础上引入代价敏感思想，提出了一种带权重的宽度学习系统。我们设计了两种权重计算方式，一种通用的加权方式以及一种基于密度的权重更新机制。后者在自适应权重计算过程中同时考虑了样本的类内信息和类间信息，更加充分地探索了样本分布信息。在自适应带权重宽度学习系统（AWBLS）的基础上，我们提出了增量式的集成模型，通过增量式的集成机制，进一步提升模型的稳定性和鲁棒性。
+
+在我们所提出的方法中，第一种方法HOEC结合基于密度的欠采样方法和代价敏感方法，利用优化算法探索新的解决方案，HOEC的优势在于结合了欠采样方法和代价敏感方法的特点，并且一定程度上能够互相弥补各自的不足，但是在针对不平衡程度不同的数据集分类时，需要挑选不同的参数，这也是HOEC在后续工作中值得改进和提升的部分。
+第二种方法PHCE结合了度量学习和随机子空间方法的方法为输入数据寻找合适的映射空间，这能够使PHCE在处理更高维度的不平衡数据集时，相对另外两种方法有一定的优势，同时我们提出的两步欠采样策略融合了自演化过程和欠采样方式，在处理极度不平衡的数据时容易损失大量的有价值多数类样本，因此这也是PHCE的一个缺点，后续工作可以通过结合欠采样和过采样的混合采样方法来完善此算法。
+第三种方法IWEB更适合实际应用中对于多数类样本分类精度和少数类样本分类精度有特定需求的分类任务，此外，这种方法能在一定程度上减轻数据集中的噪声点和异常点的影响。
+总体而言，三种方法各有特点，相辅相成，同时也各自存在着一定的局限性，在不同应用场景中可以根据实际任务需求来选择更合适的方法。
+
+随着实际应用领域的不断拓展，不平衡数据学习问题将面临更加复杂多样的场景。在已有工作的基础上，我们将从几个方面进行更进一步的探索和研究。（1）针对高维不平衡数据分类问题，我们将从特征层面出发，探索已有的降维方法在处理高维不平衡数据分类问题时的不足，结合不平衡数据的特点，改进或提出新的降维方法，同时也将结合集成学习对模型进行扩展。（2）针对实际不平衡数据分类任务中有标签数据较少的问题，我们将利用主动学习方法，在样本选择过程中结合不平衡数据分布特点，优化样本选择的策略。同时，考虑结合半监督学习里面的自标记方法提高无标签样本利用率。（3）针对流数据分类任务，我们将利用已提出的带权重宽度学习系统（WBLS），结合模型快速更新参数的优势，探索流数据中的概念漂移和不平衡问题，对WBLS模型进一步进行扩展。
+
+
+\backmatter
+
+\bibliographystyle{scutthesis}%参考文献格式文件，scutthesis.bst
+\bibliography{reference}%收录参考文献的bib文件，reference.bib，如需要换成
+
+
+%\appendix{附录}
+%重新设置表、图、公式的序号和格式，否则接着前面的继续编号       added by YYS
+\setcounter{table}{0}
+\setcounter{figure}{0}
+\setcounter{equation}{0}
+\renewcommand{\theequation}{\textbf{A}-\arabic{equation}}%格式为A开头加序号，如A-1，A-2
+\renewcommand{\thetable}{\textbf{A}-\arabic{table}}%格式为A开头加序号，如A-1，A-2
+\renewcommand{\thefigure}{\textbf{A}-\arabic{figure}}%格式为A开头加序号，如A-1，A-2
+%
+
+
+\chapterx{攻读博士学位期间取得的研究成果}%博士论文请使用该标题
+%\chapterx{攻读硕士学位期间取得的研究成果}%硕士论文请使用该标题
+
+已发表（包括已接受待发表）的论文，以及已投稿、或已成文打算投稿、或拟成文投稿的论文情况（只填写与学位论文内容相关的部分）：
+
+\begin{longtable}{|>{\centering}m{0.5cm}|>{\centering}m{2.3cm}|>{\centering}m{3.5cm}|>{\centering}m{2.6cm}|>{\centering}m{2cm}|>{\centering}m{1.3cm}|>{\centering}m{0.9cm}|}
+\hline
+序号 & 作者（全体作者，按顺序排列） & 题 目 & 发表或投稿刊物名称、级别 & 发表的卷期、年月、页码 & 相当于学位论文的哪一部分（章、节） & 被索引收录情况\tabularnewline
+\hline
+1 & Kaixiang Yang , Yu Zhiwen, Xin Wen, Wenming Cao,C. L. Philip Chen , Hau-San Wong and Jane You & Hybrid Classifier Ensemble for Imbalanced Data & IEEE Transactions on Neural Networks and Learning Systems & Volume 31, Issue 4, April 2020, Page(s) 1387-1400 & 第3章 & SCI\tabularnewline
+\hline
+2 & Kaixiang Yang , Yu Zhiwen,C. L. Philip Chen , Wenming Cao,Wong Hau San, Jane You and Guoqiang Han & Progressive hybrid classifier ensemble for imbalanced data & IEEE Transactions on Systems, Man, and Cybernetics: Systems & 小修 & 第3章 & SCI\tabularnewline
+\hline
+ 3& Kaixiang Yang , Yu Zhiwen,C. L. Philip Chen , Wenming Cao, Jane You and Wong Hau San & Incremental Weighted Ensemble Broad Learning System For Imbalanced Data
+ & IEEE Transactions on Knowledge and Data Engineering & 大修 & 第5章 & SCI\tabularnewline
+\hline
+ 4& Kankan lan, Kaixiang Yang* , Yu Zhiwen, Guoqiang Han, Jane You, C. L. Philip Chen  & Adaptive Weighted Broad Learning System for software defect prediction
+ & International Joint Conference on Neural Networks(IJCNN)& 已接收 & 第5章 & EI\tabularnewline
+\hline
+ 5& Kaixiang Yang , Yu Zhiwen, C. L. Philip Chen, Jane You & Actively and Incrementally  Broad Learning System for imbalanced data classification
+& IEEE Transactions on Neural Networks and Learning Systems & 拟投稿 & 第5章 & SCI\tabularnewline
+\hline
+ &  &  &  &  &  & \tabularnewline
+\hline
+ &  &  &  &  &  & \tabularnewline
+\hline
+\end{longtable}
+
+
+\chapterx{致谢}
+
+寒来暑往，几度春秋。
+
+~\\
+
+\begin{minipage}[t]{0.945\textwidth}%
+\begin{flushright}
+杨楷翔\\
+%\today\\
+2020年10月于华南理工大学（南校区）%可注释删除
+\par\end{flushright}
+\end{minipage}
+
+\end{document}

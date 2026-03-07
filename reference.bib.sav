@@ -1,0 +1,703 @@
+//0-others-----------------------------------------------------------------------
+@article{0-1,
+title={The Wisdom of Crowds: Why the Many are Smarter Than the Few and How Collective Wisdom Shapes Business, Economies, Societies and Nations},
+author={Surowiecki, James},
+journal={London, U.K.: Littles, Brown},
+year={2005}
+}
+@article{0-2,
+title={Comparing partitions},
+author={Hubert, Lawrence and Arabie, Phipps},
+journal={Journal of Classification},
+volume={2},
+number={1},
+pages={193--218},
+year={1985}
+}
+@article{0-3,
+title={A Cutting Plane Algorithm for A Clustering Problem},
+author={Grotschel, M. and Wakabayashi, Y.},
+journal={Mathematical Programming},
+volume={45},
+pages={59--96},
+year={1989}
+}
+@article{0-4,
+title={The Complexity of Computing Medians of Relations},
+author={Wakabayashi, Yoshiko},
+journal={Resenhas},
+volume={3},
+pages={311--323},
+year={1998}
+}
+
+
+
+
+//1-survey-------------------------------------------------------------------
+@article{1-1,
+title={Survey of Clustering Algorithms},
+author={Xu, Rui and Wunsch, Donald},
+journal={IEEE Transactions on Neural Networks},
+pages={645--678},
+year={2005}
+}
+@article{1-2,
+title={A Comprehensive Survey of Clustering Algorithms},
+author={Xu, Dongkuan and Tian, Yingjie},
+journal={Annals of Science},
+pages={165--193},
+year={2015}
+}
+@article{1-3,
+title={A survey on ensemble learning},
+author={Xibin Dong and Zhiwen Yu and Wenming Cao and Yifan Shi and Qianli Ma},
+journal={Frontiers of Computer Science},
+pages={241--258},
+year={2020}
+}
+@article{1-4,
+title={A Survey of Clustering Ensemble Algorithms},
+author={Vega-Pons, Sandro and Ruiz-Shulcloper, Jose},
+journal={International Journal of Pattern Recognition and Artificial Intelligence},
+pages={337--372},
+year={2011}
+}
+@article{1-5,
+title={A Survey: Clustering Ensembles Techniques},
+author={Ghaemi, Reza and Sulaiman, Nasir Md and Ibrahim, Hamidah and Mustapha, Norwati},
+journal={World Academy of Science, Engineering and Technology},
+volume={38},
+pages={644--653},
+year={2009}
+}
+@article{1-6,
+title={A Survey: Clustering Ensemble Selection},
+author={Liu, Min Li and Fan, Ping Xiao},
+journal={Advanced Materials Research},
+pages={403--408},
+year={2011}
+}
+@article{1-7,
+title={Cluster ensembles: A survey of approaches with recent extensions and applications},
+author={Boongoen, Tossapon and Iam-on, Natthakan},
+journal={Computer Science Review},
+pages={1--25},
+year={2018}
+}
+@article{1-8,
+author={A. {Fahad} and N. {Alshatri} and Z. {Tari} and A. {Alamri} and I. {Khalil} and A. Y. {Zomaya} and S. {Foufou} and A. {Bouras}},
+journal={IEEE Transactions on Emerging Topics in Computing},
+title={A Survey of Clustering Algorithms for Big Data: Taxonomy and Empirical Analysis},
+year={2014},
+volume={2},
+number={3},
+pages={267-279},
+}
+@article{1-9,
+title={Comparative Study of Matrix Refinement Approaches for Ensemble Clustering},
+author={Iam-on, Natthakan and Boongoen, Tossapon},
+journal={Machine Learning},
+volume={98},
+number={1},
+pages={269--300},
+year={2015}
+}
+
+
+
+//2-single clustering--------------------------------------------------------------
+@inproceedings{2-1,
+author = {MacQueen, J},
+title = {Some Methods for Classification and Analysis of Multivariate Observations},
+booktitle= {Fifth Berkeley Symp Math Stat Probab},
+volume = {1},
+pages = {281-297},
+year = {1967}
+}
+@inproceedings{2-2,
+title={BIRCH: An Efficient Data Clustering Method for Very Large Databases},
+author={Zhang, Tian and Ramakrishnan, Raghu and Livny, Miron},
+booktitle={International Conference on Management of Data},
+pages={103--114},
+year={1996}
+}
+@inproceedings{2-3,
+title={The Infinite Gaussian Mixture Model},
+author={Rasmussen, Edward Carl and Solla, A. S. and Leen, K. Todd and Muller, K. R.},
+booktitle={Conference and Workshop on Neural Information Processing Systems},
+pages={554--560},
+year={2000}
+}
+@article{2-4,
+title={Clustering by Fast Search and Find of Density Peaks},
+author={Rodriguez, Alex and Laio, Alessandro},
+journal={Science},
+pages={1492--1496},
+year={2014}
+}
+@article{2-5,
+title={Clustering by Passing Messages Between Data Points},
+author={Frey, J. Brendan and Dueck, Delbert},
+journal={Science},
+pages={972--976},
+year={2007}
+}
+@inproceedings{2-6,
+title={An Impossibility Theorem for Clustering},
+author={Kleinberg, J},
+booktitle={Conference and Workshop on Neural Information Processing Systems},
+pages={463--470},
+year={2002}
+}
+@article{2-7,
+title={A Tutorial on Spectral Clustering},
+author={Luxburg, Ulrike},
+journal={Statistics and Computing},
+pages={395--416},
+year={2007}
+}
+@article{2-8,
+author={L. {Xu} and A. {Krzyzak} and E. {Oja}},
+journal={IEEE Transactions on Neural Networks},
+title={Rival penalized competitive learning for clustering analysis, RBF net, and curve detection},
+year={1993},
+volume={4},
+number={4},
+pages={636--649},
+}
+@article{2-9,
+title={`Neural-gas' Network for Vector Quantization and Its Application to Time-series Prediction},
+author={Martinetz, Thomas and Berkovich, G. Stanislav and K.J., Schulten,},
+journal={IEEE Transactions on Neural Networks},
+pages={558--569},
+year={1993}
+}
+@article{2-10,
+title={A New Partitioning Around Medoids Algorithm},
+author={Laan, van der Mark and Pollard, Katherine and Bryan, Jennifer},
+journal={Journal of Statistical Computation and Simulation},
+pages={575--584},
+year={2003}
+}
+@article{2-11,
+title={A Fast and High Quality Multilevel Scheme for Partitioning Irregular Graphs},
+author={Karypis, George and Kumar, Vipin},
+journal={SIAM Journal on Scientific Computing},
+volume={20},
+number={1},
+pages={359--392},
+year={1998}
+}
+
+
+
+//3-ensemble learning---------------------------------------------------
+@article{3-1,
+title={Bagging Predictors},
+author={Breiman, Leo},
+journal={Machine Learning},
+pages={123--140},
+year={1996}
+}
+@article{3-2,
+title={A Decision-Theoretic Generalization of On-Line Learning and an Application to Boosting},
+author={Freund, Yoav  and  Schapire, Robert E},
+journal={Journal of Computer and System Sciences},
+volume={55},
+number={1},
+pages={119--139},
+year={1997},
+}
+@article{3-3,
+title={The Random Subspace Method for Constructing Decision Forests},
+author={Ho, Kam Tin},
+journal={IEEE Transactions on Pattern Analysis and Machine Intelligence},
+pages={832--844},
+year={1998}
+}
+@article{3-4,
+title={Greedy Function Approximation: A Gradient Boosting Machine},
+author={Friedman, H. Jerome},
+journal={Annals of Statistics},
+year={1999}
+}
+@article{3-5,
+title={Random Forests},
+author={Breiman, Leo},
+journal={Machine Learning},
+pages={5--32},
+year={2001}
+}
+@inproceedings{3-6,
+title={XGBoost: A Scalable Tree Boosting System},
+author={Chen, Tianqi and Guestrin, Carlos},
+booktitle={ACM SIGKDD Conference on Knowledge Discovery and Data Mining},
+pages={785--794},
+year={2016}
+}
+@article{3-7,
+author={K. {Yang} and Z. {Yu} and X. {Wen} and W. {Cao} and C. L. P. {Chen} and H. -S. {Wong} and J. {You}},
+journal={IEEE Transactions on Neural Networks and Learning Systems},
+title={Hybrid Classifier Ensemble for Imbalanced Data},
+year={2020},
+volume={31},
+number={4},
+pages={1387--1400},
+}
+@article{3-8,
+author={K. {Yang} and Z. {Yu} and C. L. P. {Chen} and W. {Cao} and H. S. {Wong} and J. {You} and G. {Han}},
+journal={IEEE Transactions on Systems, Man, and Cybernetics: Systems},
+title={Progressive Hybrid Classifier Ensemble for Imbalanced Data},
+year={2021},
+volume={1},
+number={1},
+pages={1-15},
+}
+@article{3-9,
+author={X. -L. {Zhang} and D. {Wang}},
+journal={IEEE/ACM Transactions on Audio, Speech, and Language Processing},
+title={A Deep Ensemble Learning Method for Monaural Speech Separation},
+year={2016},
+volume={24},
+number={5},
+pages={967--977},
+}
+@article{3-10,
+author={J. {Zheng} and X. {Cao} and B. {Zhang} and X. {Zhen} and X. {Su}},
+journal={IEEE Transactions on Neural Networks and Learning Systems},
+title={Deep Ensemble Machine for Video Classification},
+year={2019},
+volume={30},
+number={2},
+pages={553-565},
+}
+@inproceedings{3-11,
+title={Pareto Ensemble Pruning},
+author={Qian, Chao and Yu, Yang and Zhou, Zhi-Hua},
+booktitle={AAAI Conference on Artificial Intelligence},
+pages={2935--2941},
+year={2015}
+}
+
+
+// 4-consensus clustering------------------------------------------
+@inproceedings{4-1,
+author = {Strehl, Alexander and Ghosh, Joydeep},
+title = {Cluster Ensembles: A Knowledge Reuse Framework for Combining Partitionings},
+year = {2002},
+booktitle = {18th AAAI Conference on Artificial Intelligence},
+pages = {93-98},
+number = {6},
+}
+// document analysis
+@inproceedings{4-2,
+title={Ensemble Document Clustering Using Weighted Hypergraph Generated by NMF},
+author={Shinnou, Hiroyuki and Sasaki, Minoru},
+booktitle ={45th Annual Meeting of the Association for Computational Linguistics},
+pages={77--80},
+year={2007}
+}
+@article{4-3,
+title={Comparing Non-parametric Ensemble Methods for Document Clustering},
+author={Gonzalez, Edgar and Turmo, Jordi},
+journal={Natural Language and Information Systems},
+pages={245--256},
+year={2008}
+}
+@article{4-4,
+title={Ensemble Subspace Clustering of Text Data Using Two-level Features},
+author={Zhao, He and Salloum, Salman and Cai, Yeshou and Huang, Zhexue Joshua},
+journal={International Journal of Machine Learning and Cybernetics},
+pages={1751--1766},
+year={2017}
+}
+@inproceedings{4-5,
+title={Improving Consensus Clustering of Texts Using Interactive Feature Selection},
+author={Marcacini, M. Ricardo and Domingues, A. Marcos and Rezende, O. Solange},
+booktitle={International Conference on World Wide Web},
+pages={237--238},
+year={2013}
+}
+// gene analysis
+@article{4-6,
+title={SC3: Consensus Clustering of Single-cell RNA-seq Data},
+author={Kiselev, Yu Vladimir and Kirschner, Kristina and Schaub, T Michael and Andrews, Tallulah and Yiu, Andrew and Chandra, Tamir and Natarajan, N Kedar and Reik, Wolf and Barahona, Mauricio and Green, R Anthony and Hemberg, Martin},
+journal={Nature Methods},
+pages={483-486},
+year={2017}
+}
+@article{4-7,
+author={Z. {Yu} and H. {Chen} and J. {You} and H. {Wong} and J. {Liu} and L. {Li} and G. {Han}},
+journal={IEEE/ACM Transactions on Computational Biology and Bioinformatics},
+title={Double Selection Based Semi-Supervised Clustering Ensemble for Tumor Clustering from Gene Expression Profiles},
+year={2014},
+volume={11},
+number={4},
+pages={727--740},
+}
+@article{4-8,
+author={Z. {Yu} and H. {Chen} and J. {You} and J. {Liu} and H. {Wong} and G. {Han} and L. {Li}},
+journal={IEEE/ACM Transactions on Computational Biology and Bioinformatics},
+title={Adaptive Fuzzy Consensus Clustering Framework for Clustering Analysis of Cancer Data},
+year={2015},
+volume={12},
+number={4},
+pages={887--901},
+}
+@article{4-9,
+author={Z. {Yu} and H. {Chen} and J. {You} and G. {Han} and L. {Li}},
+journal={IEEE/ACM Transactions on Computational Biology and Bioinformatics},
+title={Hybrid Fuzzy Cluster Ensemble Framework for Tumor Clustering from Biomolecular Data},
+year={2013},
+volume={10},
+number={3},
+pages={657--670},
+}
+@article{4-10,
+author={Z. {Yu} and L. {Li} and J. {You} and H. {Wong} and G. {Han}},
+journal={IEEE/ACM Transactions on Computational Biology and Bioinformatics},
+title={SC3: Triple Spectral Clustering-Based Consensus Clustering Framework for Class Discovery from Cancer Gene Expression Profiles},
+year={2012},
+volume={9},
+number={6},
+pages={1751-1765},
+}
+// multimedia
+@article{4-11,
+author={Y. {Yang} and J. {Jiang}},
+journal={IEEE Transactions on Cybernetics},
+title={Adaptive Bi-Weighting Toward Automatic Initialization and Model Selection for HMM-Based Hybrid Meta-Clustering Ensembles},
+year={2019},
+volume={49},
+number={5},
+pages={1657--1668},
+}
+@article{4-12,
+title={Region-of-interest Extraction in Low Depth of Field Images Using Ensemble Clustering and Difference of Gaussian Approaches},
+author={Rafiee, G. and Dlay, S. S. and Woo, L. W.},
+journal={Pattern Recognition},
+pages={2685--2699},
+year={2013}
+}
+@article{4-13,
+author={J. {Tsai} and Y. {Lin} and H. M. {Liao}},
+journal={IEEE Transactions on Multimedia},
+title={Per-Cluster Ensemble Kernel Learning for Multi-Modal Image Clustering With Group-Dependent Feature Selection},
+year={2014},
+volume={16},
+number={8},
+pages={2229--2241},
+}
+@inproceedings{4-14,
+title={Combining Multiple Weak Clusterings},
+author={Topchy, P. Alexander and Jain, K. Anil and Punch, F. William},
+booktitle={IEEE International Conference on Data Mining},
+pages={331--338},
+year={2003}
+}
+@article{4-15,
+author={Topchy, P. Alexander and Jain, K. Anil and Punch, F. William},
+journal={IEEE Transactions on Pattern Analysis and Machine Intelligence},
+title={Clustering Ensembles: Models of Consensus and Weak Partitions},
+year={2005},
+volume={27},
+number={12},
+pages={1866--1881},
+}
+@article{4-16,
+author={M. {Yousefnezhad} and S. {Huang} and D. {Zhang}},
+journal={IEEE Transactions on Cybernetics},
+title={WoCE: A framework for Clustering Ensemble by Exploiting the Wisdom of Crowds Theory},
+year={2018},
+volume={48},
+number={2},
+pages={486-499},
+}
+@article{4-17,
+author={D. {Huang} and J. {Lai} and C. {Wang}},
+journal={IEEE Transactions on Knowledge and Data Engineering},
+title={Robust Ensemble Clustering Using Probability Trajectories},
+year={2016},
+volume={28},
+number={5},
+pages={1312-1326},
+}
+@article{4-18,
+author={P. {Rathore} and J. C. {Bezdek} and S. M. {Erfani} and S. {Rajasegarar} and M. {Palaniswami}},
+journal={IEEE Transactions on Fuzzy Systems},
+title={Ensemble Fuzzy Clustering Using Cumulative Aggregation on Random Projections},
+year={2018},
+volume={26},
+number={3},
+pages={1510-1524},
+}
+@article{4-19,
+author={D. {Huang} and C. {Wang} and J. {Lai}},
+journal={IEEE Transactions on Cybernetics},
+title={Locally Weighted Ensemble Clustering},
+year={2018},
+volume={48},
+number={5},
+pages={1460-1473},
+}
+@article{4-20,
+title={From cluster ensemble to structure ensemble},
+author={Yu, Zhiwen and You, Jane and Wong, Hau-San and Han, Guoqiang},
+journal={Journal of Information Science},
+pages={81--99},
+year={2012}
+}
+@article{4-21,
+author={Y. {Yang} and J. {Jiang}},
+journal={IEEE Transactions on Neural Networks and Learning Systems},
+title={Hybrid Sampling-Based Clustering Ensemble With Global and Local Constitutions},
+year={2016},
+volume={27},
+number={5},
+pages={952-965},
+}
+@article{4-22,
+author={Y. {Yang} and J. {Jiang}},
+journal={IEEE Transactions on Neural Networks and Learning Systems},
+title={Hybrid Sampling-Based Clustering Ensemble With Global and Local Constitutions},
+year={2016},
+volume={27},
+number={5},
+pages={952-965},
+}
+@article{4-23,
+author={Z. {Yu} and L. {Li} and J. {Liu} and J. {Zhang} and G. {Han}},
+journal={IEEE Transactions on Knowledge and Data Engineering},
+title={Adaptive Noise Immune Cluster Ensemble Using Affinity Propagation},
+year={2015},
+volume={27},
+number={12},
+pages={3176-3189},
+}
+@article{4-24,
+title={Hybrid Cluster Ensemble Framework Based on the Random Combination of Data Transformation Operators},
+author={Yu, Zhiwen and Wong, Hau-San and You, Jane and Yu, Guoxian and Han, Guoqiang},
+journal={Pattern Recognition},
+volume={45},
+number={5},
+pages={1826--1837},
+year={2012}
+}
+@article{4-25,
+title={Integrating Microarray Data by Consensus Clustering},
+author={Filkov, Vladimir and Skiena, Steven},
+journal={International Journal on Artificial Intelligence Tools},
+volume={13},
+number={4},
+pages={418--426},
+year={2004}
+}
+@article{4-26,
+title={Clustering Aggregation},
+author={Gionis, Aristides and Mannila, Heikki and Tsaparas, Panayiotis},
+journal={ACM Transactions on Knowledge Discovery from Data},
+volume={1},
+number={1},
+pages={341--352},
+year={2007}
+}
+@article{4-27,
+title={Weighted Partition Consensus via Kernels},
+author={Vega-Pons, Sandro and Correa-Morris, Jyrko and Ruiz-Shulcloper, Jose},
+journal={Pattern Recognition},
+volume={43},
+number={8},
+pages={2712--2724},
+year={2010}
+}
+@article{4-28,
+author={H. {Liu} and J. {Wu} and T. {Liu} and D. {Tao} and Y. {Fu}},
+journal={IEEE Transactions on Knowledge and Data Engineering},
+title={Spectral Ensemble Clustering via Weighted K-Means: Theoretical and Practical Evidence},
+year={2017},
+volume={29},
+number={5},
+pages={1129-1143},
+}
+@article{4-29,
+author={J. {Wu} and H. {Liu} and H. {Xiong} and J. {Cao} and J. {Chen}},
+journal={IEEE Transactions on Knowledge and Data Engineering},
+title={K-Means-Based Consensus Clustering: A Unified View},
+year={2015},
+volume={27},
+number={1},
+pages={155-169},
+}
+@article{4-30,
+author={A. L. N. {Fred} and A. K. {Jain}},
+journal={IEEE Transactions on Pattern Analysis and Machine Intelligence},
+title={Combining multiple clusterings using evidence accumulation},
+year={2005},
+volume={27},
+number={6},
+pages={835--850},
+}
+@inproceedings{4-31,
+title={Solving Cluster Ensemble Problems by Bipartite Graph Partitioning},
+author={Fern, Zhang Xiaoli and Brodley, E. Carla},
+booktitle={International Conference on Machine Learning},
+pages={36--36},
+year={2004}
+}
+@article{4-32,
+title={CA-tree: a hierarchical structure for efficient and scalable coassociation-based cluster ensembles},
+author={Wang, Tsaipei},
+journal={IEEE Transactions on Systems, Man, and Cybernetics, Part B},
+pages={686--698},
+year={2011}
+}
+
+
+
+
+
+// 5-cluster ensemble selection
+@article{5-1,
+title={Cluster Ensemble Selection},
+author={Fern, Z. Xiaoli and Lin, Wei},
+journal={Statistical Analysis and Data Mining},
+volume={1},
+number={3},
+pages={128--141},
+year={2008}
+}
+@inproceedings{5-2,
+title={Using Diversity in Cluster Ensembles},
+author={Kuncheva, I. Ludmila and Hadjitodorov, Todorov Stefan},
+booktitle={IEEE International Conference on Systems, Man and Cybernetics},
+volume={2},
+pages={1214--1219},
+year={2004}
+}
+@article{5-3,
+title={Moderate Diversity for Better Cluster Ensembles},
+author={Hadjitodorov, T. Stefan and Kuncheva, I. Ludmila and Todorova, P. Ludmila},
+journal={Information Fusion},
+volume={7},
+number={3},
+pages={264--275},
+year={2006}
+}
+@inproceedings{5-4,
+title={Adaptive Cluster Ensemble Selection},
+author={Azimi, Javad and Fern, Xiaoli},
+booktitle={International Joint Conference on Artifical Intelligence},
+pages={992--997},
+year={2009}
+}
+@article{5-5,
+title={Bagging-based Spectral Clustering Ensemble Selection},
+author={Jia, Jianhua and Xiao, Xuan and Liu, Bingxiang and Jiao, Licheng},
+journal={Pattern Recognition Letters},
+volume={32},
+number={10},
+pages={1456--1467},
+year={2011}
+}
+@article{5-6,
+title={Clustering Ensemble Selection for Categorical Data Based on Internal Validity Indices},
+author={Zhao, Xingwang and Liang, Jiye and Dang, Chuangyin},
+journal={Pattern Recognition},
+volume={69},
+pages={150--168},
+year={2017}
+}
+@article{5-7,
+title={Hierarchical Cluster Ensemble Selection},
+author={Akbari, Ebrahim and Dahlan, Mohamed Halina and Ibrahim, Roliana and Alizadeh, Hosein},
+journal={Engineering Applications of Artificial Intelligence},
+volume={39},
+pages={146--156},
+year={2015}
+}
+@article{5-8,
+title={Resampling-based Selective Clustering Ensembles},
+author={Hong, Yi and Kwong, Sam and Wang, Hanli and Ren, Qingsheng},
+journal={Pattern Recognition Letters},
+volume={30},
+number={3},
+pages={298--305},
+year={2009}
+}
+@article{5-9,
+title={Cluster Ensemble Selection with Constraints},
+author={Yang, Fan and Li, Tao and Zhou, Qifeng and Xiao, Han},
+journal={Neurocomputing},
+volume={235},
+pages={59--70},
+year={2017}
+}
+@article{5-10,
+author={Z. {Yu} and X. {Zhu} and H. {Wong} and J. {You} and J. {Zhang} and G. {Han}},
+journal={IEEE Transactions on Cybernetics},
+title={Distribution-Based Cluster Structure Selection},
+year={2017},
+volume={47},
+number={11},
+pages={3554-3567},
+}
+@inproceedings{5-11,
+title={Multiobjective Data Clustering},
+author={Law, H. C. Martin and Topchy, P. Alexander and Jain, K. Anil},
+booktitle={IEEE Conference on Computer Vision and Pattern Recognition},
+pages={424},
+year={2004}
+}
+@article{5-12,
+title={Cluster Ensemble Selection Based on A New Cluster Stability Measure},
+author={Alizadeh, Hosein and Minaei-Bidgoli, Behrouz and Parvin, Hamid},
+journal={Intelligent Data Analysis},
+volume={18},
+number={3},
+pages={389--408},
+year={2014}
+}
+@article{5-13,
+title={A Clustering Ensemble Framework Based on Elite Selection of Weighted Clusters},
+author={Parvin, Hamid and Minaei-Bidgoli, Behrouz},
+journal={Advances in Data Analysis and Classification},
+volume={7},
+number={2},
+pages={181--208},
+year={2013}
+}
+@article{5-14,
+title={A Clustering Ensemble Framework Based on Selection of Fuzzy Weighted Clusters in A Locally Adaptive Clustering Algorithm},
+author={Parvin, Hamid and Minaei-Bidgoli, Behrouz},
+journal={Pattern Analysis and Applications},
+volume={18},
+number={1},
+pages={87--112},
+year={2015}
+}
+@article{5-15,
+title={Clusterer Ensemble},
+author={Zhou, Zhi-Hua and Tang, Wei},
+journal={Knowledge-Based Systems},
+volume={19},
+number={1},
+pages={77--83},
+year={2006}
+}
+@inproceedings{5-16,
+title={Weighted Consensus Clustering},
+author={Li, Tao and Ding, Chris},
+journal={International Conference on Data Mining},
+pages={798--809},
+year={2008}
+}
+@article{5-17,
+title={Weighted Partition Consensus via Kernels},
+author={Vega-Pons, Sandro and Correa-Morris, Jyrko and Ruiz-Shulcloper, Jose},
+booktitle={Pattern Recognition},
+volume={43},
+number={8},
+pages={2712--2724},
+year={2010}
+}

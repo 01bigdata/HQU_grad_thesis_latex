@@ -162,9 +162,9 @@
 \newcommand{\abskeyen}{\rmfamily\bfseries\xiaosihao}   % 英文“Key words”字样的字体
 \newcommand{\abskeysen}{\rmfamily\wuhao\normalfont}        % 英文关键字的字体
 \newcommand{\headfont}{\songti\wuhao\normalfont} 	% 页眉字体
-\newcommand{\toctitlefont}{\heiti\xiaoerhao}            % “目录”字样的字体
-\newcommand{\tocchapterfont}{\heiti\xiaosihao} % 目录上第X章的字体
-\newcommand{\tocsectionfont}{\normalsize}         % 目录上X.Y节的字体
+\newcommand{\toctitlefont}{\heiti\bfseries\sihao}            % “目录”字样的字体：四号黑体加粗
+\newcommand{\tocchapterfont}{\songti\xiaosihao\normalfont} % 目录章条目：中文宋体小四，英文数字Times New Roman小四，不加粗
+\newcommand{\tocsectionfont}{\songti\xiaosihao\normalfont}         % 目录节条目：中文宋体小四，英文数字Times New Roman小四，不加粗
 \newcommand{\tocsubsectionfont}{\normalsize}      % 目录上X.Y.Z小节的字体
 \newcommand{\tocsubsubsectionfont}{\normalsize}      % 目录上X.Y.Z小节的字体
 \newcommand{\textchapterfont}{\centering\heiti\xiaoerhao} % 正文上第X章的字体
@@ -317,30 +317,32 @@
 % TOC and headings 设置目录
 % -----------------------------------------------------------------------------
 \RequirePackage{titletoc}
-\renewcommand\contentsname{\centerline{\toctitlefont{目\quad 录}}}
+\renewcommand\contentsname{{\toctitlefont 目\ 录}}
 
-\titlecontents{chapter}[0ex]{\tocchapterfont}{%
-    第\CJKnumber{\thecontentslabel}章\quad}{}{%
-    \hspace{.5em}\titlerule*[5pt]{$\cdot$}\contentspage}
-\titlecontents{section}[1em]{\tocsectionfont}{%
-    \thecontentslabel\quad}{}{%
-    \hspace{.5em}\titlerule*[5pt]{$\cdot$}\contentspage}
-\titlecontents{subsection}[2em]{\tocsubsectionfont}{%
-    \thecontentslabel\quad}{}{%
-    \hspace{.5em}\titlerule*[5pt]{$\cdot$}\contentspage}
-\titlecontents{subsubsection}[3em]{\tocsubsubsectionfont}{%
-    \thecontentslabel\quad}{}{%
-    \hspace{.5em}\titlerule*[5pt]{$\cdot$}\contentspage}
+% 目录：仅保留章、节两级；章标题后空一格，节标题后不空格
+% 二级目录（section）采用类似 Word TOC2 的样式：左侧缩进 2 个汉字宽度
+\titlecontents{chapter}[0em]{\tocchapterfont}{%
+    第\thecontentslabel 章\ }{}{%
+    \titlerule*[5pt]{$\cdot$}\contentspage}
+\titlecontents{section}[2em]{\tocsectionfont}{%
+    \thecontentslabel}{}{%
+    \titlerule*[5pt]{$\cdot$}\contentspage}
+\titlecontents{subsection}[4em]{\tocsubsectionfont}{%
+    \thecontentslabel}{}{%
+    \titlerule*[5pt]{$\cdot$}\contentspage}
+\titlecontents{subsubsection}[6em]{\tocsubsubsectionfont}{%
+    \thecontentslabel}{}{%
+    \titlerule*[5pt]{$\cdot$}\contentspage}
 
 % 设定章节深度和目录深度
 \setcounter{secnumdepth}{4}
-\setcounter{tocdepth}{2}
+\setcounter{tocdepth}{1}
 
 % Text style
 \RequirePackage[pagestyles,rm]{titlesec}
-\renewcommand{\chaptername}{第\CJKnumber{\thechapter}章}
-\titleformat{\chapter}[hang]{\textchapterfont}{第\CJKnumber{\thechapter}章}{1em}{}
-\titleformat{\section}[hang]{\textsectionfont}{\thesection}{1em}{}
+\renewcommand{\chaptername}{第\thechapter 章}
+\titleformat{\chapter}[hang]{\textchapterfont}{第\thechapter 章}{\fontdimen2\font}{}
+\titleformat{\section}[hang]{\textsectionfont}{\thesection}{0em}{}
 \titleformat{\subsection}[hang]{\textsubsectionfont}{\thesubsection}{1em}{}
 \titleformat{\subsubsection}[hang]{\textsubsectionfont}{\thesubsubsection}{1ex}{}% 小四黑体居左
 
@@ -453,10 +455,18 @@
   \clearpage
   \chapterxname{目录}%
   \chapterxtrue
-  \chapter*{\contentsname}%
   \thispagestyle{tocstyle}%
   \pagestyle{tocstyle}%
-  \@starttoc{toc}%
+  {\parindent=0pt
+   \centering
+   \vspace*{14pt}% 前空 1 行（小四宋体行高）
+   {\contentsname\par}%
+   \vspace{14pt}% 后空 1 行（小四宋体行高）
+  }
+  \begingroup
+    \linespacing{1.5}\selectfont
+    \@starttoc{toc}%
+  \endgroup
 }
 
 \renewcommand\mainmatter{%
@@ -483,7 +493,7 @@
   \CJKindent
   \makeindex
   \normalsize %正文字体格式
-  \linespacing{1.682} % 主行距～1.5倍
+  \linespacing{1.5} % 主行距 1.5 倍
 }
 \AtEndDocument{}
 
@@ -505,7 +515,6 @@
   \chapterxname{摘要}
   \thispagestyle{abstractstyle}%
   \pagestyle{abstractstyle}%
-  \addcontentsline{toc}{chapter}{摘要}%
   \begin{center}%
     {\heiti\sanhao \@title\par}%
     {\songti\sihao \@institute\par}%
@@ -524,7 +533,6 @@
   \chapterxname{Abstract}
   \thispagestyle{abstractstyle}%
   \pagestyle{abstractstyle}%
-  \addcontentsline{toc}{chapter}{Abstract}%
   \begin{center}%
     \vspace*{\baselineskip}%
     {\HQUtitleENfont \@titleEN\par}%

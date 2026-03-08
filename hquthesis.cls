@@ -152,7 +152,7 @@
 \tolerance=10000
 \hfuzz=150pt
 
-% My fonts for HQU thesis %%%%TODO%%%%
+% My fonts for HQU thesis %%%%TODO%%%% %修改字体
 \renewcommand{\normalsize}{\xiaosihao\songti\normalfont} % Normal font size 小四号宋体
 \newcommand{\absnamecn}{\heiti\sihao}         % 中文“摘要”字样的字体
 \newcommand{\abskeycn}{\heiti\sihao}       % 中文摘要“关键字”字样的字体
@@ -167,12 +167,16 @@
 \newcommand{\tocsectionfont}{\songti\xiaosihao\normalfont}         % 目录节条目：中文宋体小四，英文数字Times New Roman小四，不加粗
 \newcommand{\tocsubsectionfont}{\normalsize}      % 目录上X.Y.Z小节的字体
 \newcommand{\tocsubsubsectionfont}{\normalsize}      % 目录上X.Y.Z小节的字体
-\newcommand{\textchapterfont}{\centering\heiti\xiaoerhao} % 正文上第X章的字体
-\newcommand{\textsectionfont}{\heiti\xiaosanhao}            % 正文上X.Y节的字体
-\newcommand{\textsubsectionfont}{\heiti\sihao}     % 正文上X.Y.Z小节的字体
+%\newcommand{\textchapterfont}{\centering\heiti\sihao\linespacing{1.5}} % 正文上第X章的字体：四号黑体居中，不加粗，1.5倍行距
+%\newcommand{\textsectionfont}{\songti\sihao\linespacing{1.5}}            % 正文上X.Y节的字体：四号宋体左起，不加粗，1.5倍行距
+%\newcommand{\textsubsectionfont}{\heiti\xiaosihao\linespacing{1.5}}     % 正文上X.Y.Z小节的字体：小四黑体左起，不加粗，1.5倍行距
+\newcommand{\textchapterfont}{\centering\heiti\bfseries\sihao\linespacing{1.5}}% 正文上第X章的字体：四号黑体居中，加粗，1.5倍行距
+\newcommand{\textsectionfont}{\songti\bfseries\sihao\linespacing{1.5}}% 正文上X.Y节的字体：四号宋体左起，加粗，1.5倍行距
+\newcommand{\textsubsectionfont}{\heiti\bfseries\xiaosihao\linespacing{1.5}}% 正文上X.Y.Z小节的字体：小四黑体左起，加粗，1.5倍行距
 \newcommand{\textsubsubsectionfont}{\heiti\xiaosihao}     % 正文上X.Y.Z.K小节的字体
 \newcommand{\footnotefont}{\songti\xiaowuhao\normalfont}     % 脚注字体
-\newcommand{\ftcaptionfont}{\kaiti\wuhao\normalfont}         % 图表标题的字体
+\newcommand{\ftcaptionfont}{\songti\xiaosihao\normalfont}         % 图标题字体：小四，中文宋体，英文数字 Times New Roman
+\newcommand{\tbcaptionfont}{\songti\xiaosihao\normalfont}         % 表标题字体：小四，中文宋体，英文数字 Times New Roman
 \newcommand{\reftitlefont}{\heiti\xiaoerhao}      % “参考文献”字样的字体
 \newcommand{\refbodyfont}{\songti\wuhao\normalfont}          % 参考文献字体
 \newcommand{\thanktitlefont}{\heiti\sanhao}    % “致谢”字样的字体
@@ -186,7 +190,8 @@
 \RequirePackage{subfig} % config兼容subfigure命令
 \RequirePackage{float} % 可以使用［H］命令
 \RequirePackage{caption} % 定义图的标题格式：居中. 使用caption3.0
-\DeclareCaptionFont{capFont}{\ftcaptionfont} % 表格名及图名
+\DeclareCaptionFont{capFont}{\ftcaptionfont} % 图名
+\DeclareCaptionFont{tabCapFont}{\tbcaptionfont} % 表名
 \DeclareCaptionLabelSeparator{twospace}{~~}
 \captionsetup{ % 去掉图标签后的冒号
   labelsep=twospace,
@@ -198,7 +203,8 @@
   listfigurename=插图目录,
   listtablename=表格目录
 }
-\captionsetup[figure]{position=bottom}
+\captionsetup[figure]{position=bottom,justification=centering,singlelinecheck=true}
+\captionsetup[table]{position=top,justification=centering,singlelinecheck=true,font={tabCapFont},aboveskip=14pt,belowskip=0pt}
 \captionsetup[subfloat]{captionskip=6bp,nearskip=0bp,farskip=0bp,topadjust=0bp,justification=centering}
 
 %%%%%%%%%%定义双标题命令
@@ -229,14 +235,25 @@
 \RequirePackage{longtable} % 长表格支持，截断跨页
 \RequirePackage{ctable, threeparttable} % 支持表格注释,复杂表格，一般用不上
 %\RequirePackage{tabularx}
-\captionsetup[table]{position=top}
+\AtBeginEnvironment{table}{%
+  \renewcommand{\arraystretch}{1.2}% 表格内容 1.2 倍行距
+  \songti\wuhao\normalfont% 表格内容：五号宋体，英文数字由 Times New Roman 处理
+  \centering%
+}
+\AfterEndEnvironment{table}{\par\vspace{14pt}}% 表格结束后与正文之间空一行（宋体小四号）
+\AtBeginEnvironment{longtable}{%
+  \renewcommand{\arraystretch}{1.2}% 长表格内容 1.2 倍行距
+  \songti\wuhao\normalfont% 长表格内容：五号宋体，英文数字由 Times New Roman 处理
+}
+\setlength{\LTpost}{14pt}% 长表格结束后与正文之间空一行（宋体小四号）
+\newcommand{\ContinuedTableCaption}{%
+  \caption[]{\hfill\tbcaptionfont 续表\thetable}\\
+}
 %定义双标题命令
 
 \newcommand{\TableBicaption}[2]{%
   \renewcommand{\tablename}{表}%
-  \vspace{8pt}%
   \caption{#1}%
-  \vspace{6pt}%
   \addtocounter{table}{-1}%
   \renewcommand{\tablename}{Table}%
   \captionsetup{list=false}%
@@ -254,9 +271,9 @@
 %\renewcommand{\algorithmicrequire}{\textbf{Input:}}  % Use Input in the format of Algorithm
 %\renewcommand{\algorithmicensure}{\textbf{Process:}} % Use Output in the format of Algorithm
 
-\renewcommand{\theequation}{\arabic{chapter}-\arabic{equation}}
-\renewcommand{\thetable}{\arabic{chapter}-\arabic{table}}
-\renewcommand{\thefigure}{\arabic{chapter}-\arabic{figure}}
+\renewcommand{\theequation}{\arabic{chapter}.\arabic{equation}}
+\renewcommand{\thetable}{\arabic{chapter}.\arabic{table}}
+\renewcommand{\thefigure}{\arabic{chapter}.\arabic{figure}}
 
 \renewcommand{\thefootnote}{注\arabic{footnote}}
 \setcounter{footnote}{0}
@@ -317,12 +334,12 @@
 % TOC and headings 设置目录
 % -----------------------------------------------------------------------------
 \RequirePackage{titletoc}
-\renewcommand\contentsname{{\toctitlefont 目\ 录}}
+\renewcommand\contentsname{{\toctitlefont 目\hspace{1em}录}}
 
 % 目录：仅保留章、节两级；章标题后空一格，节标题后不空格
 % 二级目录（section）采用类似 Word TOC2 的样式：左侧缩进 2 个汉字宽度
 \titlecontents{chapter}[0em]{\tocchapterfont}{%
-    第\thecontentslabel 章\ }{}{%
+    第\CJKnumber{\thecontentslabel}章\hspace{1em}}{}{%
     \titlerule*[5pt]{$\cdot$}\contentspage}
 \titlecontents{section}[2em]{\tocsectionfont}{%
     \thecontentslabel}{}{%
@@ -341,14 +358,14 @@
 % Text style
 \RequirePackage[pagestyles,rm]{titlesec}
 \renewcommand{\chaptername}{第\thechapter 章}
-\titleformat{\chapter}[hang]{\textchapterfont}{第\thechapter 章}{\fontdimen2\font}{}
+\titleformat{\chapter}[hang]{\textchapterfont}{第\thechapter 章}{0.5em}{}
 \titleformat{\section}[hang]{\textsectionfont}{\thesection}{0em}{}
-\titleformat{\subsection}[hang]{\textsubsectionfont}{\thesubsection}{1em}{}
+\titleformat{\subsection}[hang]{\textsubsectionfont}{\thesubsection}{0em}{}
 \titleformat{\subsubsection}[hang]{\textsubsectionfont}{\thesubsubsection}{1ex}{}% 小四黑体居左
 
 %\titlespacing{\chapter}{0pt}{3ex plus .5ex minus .5ex}{3ex plus .5ex minus .5ex} % 缩短章节标题的上边距
 \setlength{\parskip}{0ex}% 正文段前段后距：无空行
-\titlespacing{\chapter}{0pt}{-20pt}{1pt} % 缩短章标题上间距，revised by Quansheng Guan
+\titlespacing{\chapter}{0pt}{14pt}{14pt} % 章标题前后各空 1 行（按小四宋体行高 14pt）
 \titlespacing{\section}{0pt}{1pt}{1pt}  % 标题间距
 \titlespacing{\subsection}{0pt}{4pt}{0pt}
 \titlespacing{\subsubsection}{0pt}{6pt}{6pt}
@@ -555,7 +572,7 @@
 }
 \renewcommand{\maketitle}{%
   \ifpdfcover
-    \includepdf[pages={1,{},3,{},5,{},7,{}}]{thesis_cover.pdf}%pdf文件路径为主文件tex或lyx的当前目录
+    \includepdf[pages=1]{thesis_cover.pdf}%pdf文件路径为主文件tex或lyx的当前目录
   \else
     \begin{titlepage}
       \raggedleft
